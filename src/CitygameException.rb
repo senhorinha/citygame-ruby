@@ -1,0 +1,3 @@
+class CitygameException < Exception
+
+end
