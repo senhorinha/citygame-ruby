@@ -1,4 +1,5 @@
 require 'colorize'
+require 'readline'
 require_relative '../../src/Jogo'
 require_relative 'CommandParser'
 require_relative 'ModoNovoJogo'
@@ -21,8 +22,8 @@ parser = CommandParser.new
 modo = ModoNovoJogo.new jogo
 
 while modo.ativo do
-  modo.sufixar()
-  command_hash = parser.parse(gets)
+  input = Readline.readline(modo.sufixo, true)
+  command_hash = parser.parse(input)
 
   modo = modo.submeter_comando command_hash
 end

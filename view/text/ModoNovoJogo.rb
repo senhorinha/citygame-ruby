@@ -8,8 +8,8 @@ class ModoNovoJogo < Modo
     @comandos = [:exit, :help, :criar_jogador, :status, :iniciar]
   end
 
-  def sufixar
-    print "new-game ~> "
+  def sufixo
+    return 'new-game ~> '
   end
 
   def help

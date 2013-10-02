@@ -8,8 +8,8 @@ class Modo
     @jogo = jogo
   end
 
-  def sufixar
-    print " ~> "
+  def sufixo
+    return ' ~> '
   end
 
   def submeter_comando command_hash
