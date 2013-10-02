@@ -1,48 +1,49 @@
 class Tropa
 
-  attr_reader :local, :tamanho, :jogador, :forcaDeAtaque
+  attr_reader :local, :tamanho, :jogador, :forca_de_ataque
+  
   def initialize jogador, tamanho, local
     @local = local
     @jogador = jogador
     @tamanho = tamanho
   end
 
-  def atualizaForcaDeAtaque tecnologia
-    forcaDeAtaque = tecnologia * tamanho
+  def atualiza_forca_de_ataque tecnologia
+    forca_de_ataque = tecnologia * tamanho
   end
 
-  def ataca tropaInimiga
+  def ataca tropa_inimiga
 
-    forcaDeAtaqueInimigo = tropaInimiga.forcaDeAtaque
+    forca_de_ataque_inimigo = tropa_inimiga.forca_de_ataque
 
-    numeroDeOuro = 1.618033
-    funcaoCerco = funcaoCerco(forcaDeAtaqueInimigo)
+    numero_de_ouro = 1.618033
+    funcao_cerco = funcao_cerco(forca_de_ataque_inimigo)
 
-    #CasoUm   : Se a força da tropa de ataque for maior que a força da tropa de defesa
-    casoUm = ((forcaDeAtaque/forcaDeAtaqueInimigo)**numeroDeOuro)*(1/funcaoCerco(forcaDeAtaqueInimigo))
-    #CasoDois : Se a força da tropa de defesa for maior que a força da tropa de ataque
-    casoDois = (1/funcaoCerco)
+    #caso_um   : Se a força da tropa de ataque for maior que a força da tropa de defesa
+    caso_um = ((forca_de_ataque/forca_de_ataque_inimigo)**numero_de_ouro)*(1/funcao_cerco(forca_de_ataque_inimigo))
+    #caso_dois : Se a força da tropa de defesa for maior que a força da tropa de ataque
+    caso_dois = (1/funcao_cerco)
 
-    if(forcaDeAtaque > forcaDeAtaqueInimigo)
-      atualizaValoresPosBatalha casoUm
-      tropaInimiga.atualizaValoresPosBatalha casoDois
+    if(forca_de_ataque > forca_de_ataque_inimigo)
+      atualiza_valores_pos_batalha caso_um
+      tropa_inimiga.atualiza_valores_pos_batalha caso_dois
     else
-      atualizaValoresPosBatalha casoDois
-      tropaInimiga.atualizaValoresPosBatalha casoUm
+      atualiza_valores_pos_batalha caso_dois
+      tropa_inimiga.atualiza_valores_pos_batalha caso_um
     end
   end
 
   # Atualiza tamanho da tropa e valor de ataque
-  def atualizaValoresPosBatalha resultado
-    tecnologiaAux = forcaDeAtaque/tamanho
+  def atualiza_valores_pos_batalha resultado
+    tecnologia_aux = forca_de_ataque/tamanho
     tamanho *= resultado
-    atualizaForcaDeAtaque(tecnologiaAux)
+    atualiza_forca_de_ataque(tecnologia_aux)
   end
 
   private
 
-  def funcaoCerco(forcaDeAtaqueInimigo)
-    return Math.sqrt((forcaDeAtaque*forcaDeAtaqueInimigo)/10*(forcaDeAtaque+forcaDeAtaqueInimigo))
+  def funcao_cerco(forca_de_ataque_inimigo)
+    return Math.sqrt((forca_de_ataque*forca_de_ataque_inimigo)/10*(forca_de_ataque+forca_de_ataque_inimigo))
   end
 
 end
