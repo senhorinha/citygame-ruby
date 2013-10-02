@@ -1,4 +1,5 @@
 class Tropa
+
   attr_reader :local, :tamanho, :jogador, :forcaDeAtaque
   def initialize jogador, tamanho, local
     @local = local
@@ -10,9 +11,9 @@ class Tropa
     forcaDeAtaque = tecnologia * tamanho
   end
 
-  def ataca tropa
+  def ataca tropaInimiga
 
-    forcaDeAtaqueInimigo = tropa.forcaDeAtaque
+    forcaDeAtaqueInimigo = tropaInimiga.forcaDeAtaque
 
     numeroDeOuro = 1.618033
     funcaoCerco = funcaoCerco(forcaDeAtaqueInimigo)
@@ -24,13 +25,14 @@ class Tropa
 
     if(forcaDeAtaque > forcaDeAtaqueInimigo)
       atualizaValoresPosBatalha casoUm
-      tropa.atualizaValoresPosBatalha casoDois
+      tropaInimiga.atualizaValoresPosBatalha casoDois
     else
       atualizaValoresPosBatalha casoDois
-      tropa.atualizaValoresPosBatalha casoUm
+      tropaInimiga.atualizaValoresPosBatalha casoUm
     end
   end
 
+  # Atualiza tamanho da tropa e valor de ataque
   def atualizaValoresPosBatalha resultado
     tecnologiaAux = forcaDeAtaque/tamanho
     tamanho *= resultado
