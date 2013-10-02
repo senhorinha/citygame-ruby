@@ -34,6 +34,9 @@ class Tropa
   end
 
   # Atualiza tamanho da tropa e valor de ataque
+  
+  protected
+  
   def atualiza_valores_pos_batalha resultado
     tecnologia_aux = forca_de_ataque/tamanho
     tamanho *= resultado
