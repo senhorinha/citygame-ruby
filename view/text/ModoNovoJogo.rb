@@ -24,7 +24,7 @@ class ModoNovoJogo < Modo
 
   def criar_jogador nome
     jogo.criar_jogador nome
-    puts "Jogador #{nome} criado!"
+    success_msg "Jogador #{nome} criado!"
   end
 
   def status
@@ -49,7 +49,7 @@ class ModoNovoJogo < Modo
     end
 
     modo_partida = ModoPartida.new(@jogo)
-    puts "Partida iniciada!"
+    success_msg "Partida iniciada!"
     return modo_partida
   end
 

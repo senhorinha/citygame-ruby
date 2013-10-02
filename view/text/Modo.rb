@@ -40,6 +40,10 @@ class Modo
     return c == 's'
   end
 
+  def success_msg msg
+    puts msg.colorize :green
+  end
+
   def warning_msg msg
     puts msg.colorize :yellow
   end
