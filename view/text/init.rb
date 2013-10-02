@@ -1,3 +1,4 @@
+require 'colorize'
 require_relative '../../src/Jogo'
 require_relative 'CommandParser'
 require_relative 'ModoNovoJogo'

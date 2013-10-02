@@ -14,7 +14,7 @@ class Modo
 
   def submeter_comando command_hash
     if !validar_comando(command_hash[:command]) then
-      puts "'#{command_hash[:command]}' não é um comando válido... Digite 'help' caso esteja perdido!"
+      error_msg "'#{command_hash[:command]}' não é um comando válido... Digite 'help' caso esteja perdido!"
       return self
     end
 
@@ -26,7 +26,7 @@ class Modo
       end
     rescue => e
       puts e
-      puts "Número de argumentos inválido. Digite 'help' para ver o número correto de argumentos do comando"
+      error_msg "Número de argumentos inválido. Digite 'help' para ver o número correto de argumentos do comando"
     end
 
     return r if r.kind_of? Modo
@@ -34,10 +34,18 @@ class Modo
   end
 
   def confirmar_comando msg
-    print msg, " (s, n) "
+    print msg.colorize(:yellow), " (s, n) "
     c = gets
     c = c.strip.downcase
     return c == 's'
+  end
+
+  def warning_msg msg
+    puts msg.colorize :yellow
+  end
+
+  def error_msg msg
+    puts msg.colorize :red
   end
 
 private

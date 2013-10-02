@@ -28,8 +28,13 @@ class ModoNovoJogo < Modo
   end
 
   def status
+    if @jogo.jogadores.size == 0 then
+      puts "[Nenhum jogador criado]"
+      return
+    end
+
     puts "[Jogadores atualmente cadastrados]"
-    jogo.jogadores.each do |jogador|
+    @jogo.jogadores.each do |jogador|
       puts "  ##{jogador.id} #{jogador.nome}"
     end
     puts ""
@@ -39,7 +44,7 @@ class ModoNovoJogo < Modo
     begin
       @jogo.iniciar
     rescue CitygameException => e
-      puts e
+      error_msg e.to_s
       return
     end
 
