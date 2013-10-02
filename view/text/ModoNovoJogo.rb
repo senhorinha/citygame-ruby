@@ -5,7 +5,7 @@ class ModoNovoJogo < Modo
 
   def initialize jogo
     super jogo
-    @comandos = [:exit, :help, :criar_jogador, :status, :iniciar]
+    @comandos = ['exit', 'help', 'criar_jogador', 'status', 'iniciar']
   end
 
   def sufixo

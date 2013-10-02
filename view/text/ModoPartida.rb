@@ -4,7 +4,7 @@ class ModoPartida < Modo
 
   def initialize jogo
     super jogo
-    @comandos = [:exit, :help, :passar]
+    @comandos = ['exit', 'help', 'passar']
   end
 
   def sufixo

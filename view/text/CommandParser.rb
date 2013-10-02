@@ -2,7 +2,7 @@ class CommandParser
 
   def parse string
     pieces = string.split ' ', 2
-    command = pieces[0].downcase
+    command = pieces[0]
 
     if pieces[1] then
       options = pieces[1].split ','

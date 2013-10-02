@@ -21,7 +21,11 @@ jogo = Jogo.new
 parser = CommandParser.new
 modo = ModoNovoJogo.new jogo
 
+Readline.completion_append_character = ' '
+
 while modo.ativo do
+  Readline.completion_proc = modo.completion_proc
+
   input = Readline.readline(modo.sufixo, true)
   command_hash = parser.parse(input)
 

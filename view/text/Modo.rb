@@ -1,6 +1,5 @@
 class Modo
-  attr_reader :ativo
-  attr_reader :jogo
+  attr_reader :ativo, :jogo, :comandos
 
   def initialize jogo
     @comandos = []
@@ -10,6 +9,10 @@ class Modo
 
   def sufixo
     return ' ~> '
+  end
+
+  def completion_proc
+    return proc { |s| comandos.grep(/^#{s}/) }
   end
 
   def submeter_comando command_hash
@@ -25,7 +28,6 @@ class Modo
         r = self.send(command_hash[:command], *command_hash[:options])
       end
     rescue => e
-      puts e
       error_msg "Número de argumentos inválido. Digite 'help' para ver o número correto de argumentos do comando"
     end
 
@@ -55,7 +57,7 @@ class Modo
 private
 
   def validar_comando comando
-    return false if !@comandos.include?(comando.to_sym)
+    return false if !@comandos.include?(comando)
     return false if comando.empty?
 
     return true
