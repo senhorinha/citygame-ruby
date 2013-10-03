@@ -22,17 +22,20 @@ class Tropa
   # @param [Local] local_novo
   # @return [Tropa] retorna a mesma tropa ou uma nova tropa caso precise separar tropa.
   def movimenta quantidade_de_exercitos, local_novo
-    if quantidade_de_exercitos == @tamanho
-      @local = local_novo
-      self
-    else
-      if 0 < quantidade_de_exercitos < @tamanho
+
+    #TODO: Resolver problema de perda de referencia (concatena/movimenta/ocupa)
+    if 0 < quantidade_de_exercitos <= @tamanho
+      if quantidade_de_exercitos == @tamanho
+        @local = local_novo
+        self
+      else
         separa quantidade_de_exercitos, local_novo
       end
+
     end
   end
 
-  # @param [Tropa] tropa_inimiga
+# @param [Tropa] tropa_inimiga
   def ataca tropa_inimiga
     forca_de_ataque_inimigo = tropa_inimiga.forca_de_ataque
     funcao_cerco = funcao_cerco(forca_de_ataque_inimigo)
@@ -51,7 +54,7 @@ class Tropa
     end
   end
 
-  # @param [Tropa] tropa
+# @param [Tropa] tropa
   def concatena tropa
     if @jogador.eql? tropa.jogador then
       @tamanho += tropa.tamanho
@@ -62,8 +65,8 @@ class Tropa
 
   protected
 
-  # Atualiza tamanho da tropa e valor de ataque
-  # @param [Fixnum] resultado
+# Atualiza tamanho da tropa e valor de ataque
+# @param [Fixnum] resultado
   def atualiza_valores_pos_batalha resultado
     tecnologia_aux = @forca_de_ataque/tamanho
     tamanho *= resultado
@@ -72,14 +75,15 @@ class Tropa
 
   private
 
-  # @param [Fixnum] forca_de_ataque_inimigo
+# @param [Fixnum] forca_de_ataque_inimigo
   def funcao_cerco forca_de_ataque_inimigo
     Math.sqrt((@forca_de_ataque*forca_de_ataque_inimigo)/10*(@forca_de_ataque+forca_de_ataque_inimigo))
   end
 
-  # @param [Fixnum] quantidade_de_exercitos
-  # @param [Local] local_novo
+# @param [Fixnum] quantidade_de_exercitos
+# @param [Local] local_novo
   def separa quantidade_de_exercitos, local_novo
+    #TODO: Ajustar método para movimento em ambas condições
     if quantidade_de_exercitos != @tamanho
       @tamanho -= quantidade_de_exercitos
       Tropa.new(@jogador, quantidade_de_exercitos, local_novo)
