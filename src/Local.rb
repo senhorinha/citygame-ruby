@@ -4,5 +4,4 @@ class Local
   def initialize
     @exercitos = []
   end
-
 end
