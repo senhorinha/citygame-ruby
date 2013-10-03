@@ -1,3 +1,5 @@
+# -*- encoding : utf-8 -*-
+
 class Tropa
 
   attr_reader :local, :tamanho, :jogador, :forca_de_ataque
