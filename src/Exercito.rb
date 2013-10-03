@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Exercito
   attr_reader :n, :jogador
 

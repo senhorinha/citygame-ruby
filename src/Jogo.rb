@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require_relative 'CitygameException'
 require_relative 'Jogador'
 require_relative 'Cidade'

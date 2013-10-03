@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Modo
   attr_reader :ativo, :jogo, :comandos
 

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'colorize'
 require 'readline'
 require_relative '../../src/Jogo'
