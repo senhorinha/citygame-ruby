@@ -14,25 +14,35 @@ class Tropa
   end
 
   # @param [Fixnum] tecnologia
-  def atualiza_forca_de_ataque tecnologia
-    @forca_de_ataque = tecnologia * tamanho
+  def atualiza_forca_de_ataque
+    @forca_de_ataque = @jogador.tecnologia * @tamanho
   end
 
   # @param [Fixnum] quantidade_de_exercitos
   # @param [Local] local_novo
   # @return [Tropa] retorna a mesma tropa ou uma nova tropa caso precise separar tropa.
   def movimenta quantidade_de_exercitos, local_novo
-
-    #TODO: Resolver problema de perda de referencia (concatena/movimenta/ocupa)
     if 0 < quantidade_de_exercitos <= @tamanho
       if quantidade_de_exercitos == @tamanho
-        @local = local_novo
-        self
+        tropa = self
       else
-        separa quantidade_de_exercitos, local_novo
+        tropa_separada = true
+        tropa = separa quantidade_de_exercitos
       end
-
+      if (local_novo.ocupa(tropa))
+        @local = local_novo
+        tropa
+      else
+        if tropa_separada
+          @tamanho += quantidade_de_exercitos
+          atualiza_forca_de_ataque
+          self
+        end
+      end
+    else
+      raise ArgumentError, 'Quantidade de exércitos, '+quantidade_de_exercitos+',  fora do intervalo aceitavel [0, '+tamanho_tropa +']'
     end
+
   end
 
 # @param [Tropa] tropa_inimiga
@@ -58,8 +68,11 @@ class Tropa
   def concatena tropa
     if @jogador.eql? tropa.jogador then
       @tamanho += tropa.tamanho
+      atualiza_forca_de_ataque
+      tropa = self # Como há uma concatenação ambos referenciarão a mesma instância.
+      self
     else
-      false
+      raise ArgumentError, 'Não é possível concatenar tropas de diferentes jogadores'
     end
   end
 
@@ -68,9 +81,8 @@ class Tropa
 # Atualiza tamanho da tropa e valor de ataque
 # @param [Fixnum] resultado
   def atualiza_valores_pos_batalha resultado
-    tecnologia_aux = @forca_de_ataque/tamanho
-    tamanho *= resultado
-    atualiza_forca_de_ataque(tecnologia_aux)
+    @tamanho *= resultado
+    atualiza_forca_de_ataque
   end
 
   private
@@ -81,15 +93,12 @@ class Tropa
   end
 
 # @param [Fixnum] quantidade_de_exercitos
-# @param [Local] local_novo
-  def separa quantidade_de_exercitos, local_novo
-    #TODO: Ajustar método para movimento em ambas condições
-    if quantidade_de_exercitos != @tamanho
-      @tamanho -= quantidade_de_exercitos
-      Tropa.new(@jogador, quantidade_de_exercitos, local_novo)
-    else
-      movimenta quantidade_de_exercitos, local_novo
-    end
+# @return [Tropa] Uma nova tropa com valores de ataque atualizados
+  def separa quantidade_de_exercitos
+    @tamanho -= quantidade_de_exercitos
+    tropa_separada = Tropa.new(@jogador, quantidade_de_exercitos, @local)
+    tropa_separada.atualiza_forca_de_ataque
+    tropa_separada
   end
 
 end
