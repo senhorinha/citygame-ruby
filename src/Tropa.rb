@@ -22,11 +22,11 @@ class Tropa
   # @param [Local] local_novo
   # @return [Tropa] retorna a mesma tropa ou uma nova tropa caso precise separar tropa.
   def movimenta quantidade_de_exercitos, local_novo
-    if (quantidade_de_exercitos == @tamanho)
+    if quantidade_de_exercitos == @tamanho
       @local = local_novo
       self
     else
-      if (quantidade_de_exercitos < @tamanho || quantidade_de_exercitos > 0)
+      if 0 < quantidade_de_exercitos < @tamanho
         separa quantidade_de_exercitos, local_novo
       end
     end
@@ -80,13 +80,11 @@ class Tropa
   # @param [Fixnum] quantidade_de_exercitos
   # @param [Local] local_novo
   def separa quantidade_de_exercitos, local_novo
-    if quantidade_de_exercitos <= @tamanho
-      if quantidade_de_exercitos != @tamanho
-        @tamanho -= quantidade_de_exercitos
-        Tropa.new(@jogador, quantidade_de_exercitos, local_novo)
-      else
-        #TODO: Criar mecanismo para mover a tropa para o local_novo
-      end
+    if quantidade_de_exercitos != @tamanho
+      @tamanho -= quantidade_de_exercitos
+      Tropa.new(@jogador, quantidade_de_exercitos, local_novo)
+    else
+      movimenta quantidade_de_exercitos, local_novo
     end
   end
 
