@@ -3,7 +3,7 @@
 class Tropa
   attr_reader :local, :tamanho, :jogador, :forca_de_ataque
 
-  NUMERO_DE_OURO = 1.618033
+  PHI = (1 + Math.sqrt (5))/2
 
   # @param [Jogador] jogador
   # @param [Fixnum] tamanho
@@ -41,7 +41,7 @@ class Tropa
     funcao_cerco = funcao_cerco(forca_de_ataque_inimigo)
 
     #caso_um   : Se a força da tropa de ataque for maior que a força da tropa de defesa
-    caso_um = ((@forca_de_ataque/forca_de_ataque_inimigo)**NUMERO_DE_OURO)*(1/funcao_cerco(forca_de_ataque_inimigo))
+    caso_um = ((@forca_de_ataque/forca_de_ataque_inimigo)**PHI)*((1 + Math.sqrt (5))/2(forca_de_ataque_inimigo))
     #caso_dois : Se a força da tropa de defesa for maior que a força da tropa de ataque
     caso_dois = (1/funcao_cerco)
 
