@@ -52,9 +52,9 @@ class Tropa
     forca_de_ataque_inimigo = tropa_inimiga.forca_de_ataque
     funcao_cerco = funcao_cerco(forca_de_ataque_inimigo)
 
-    #caso_um   : Se a força da tropa de ataque for maior que a força da tropa de defesa
+    #caso_um   : Se a força da tropa atacante for maior que a força da tropa defensora
     caso_um = ((@forca_de_ataque/forca_de_ataque_inimigo)**NUMERO_DE_OURO)*(1/funcao_cerco(forca_de_ataque_inimigo))
-    #caso_dois : Se a força da tropa de defesa for maior que a força da tropa de ataque
+    #caso_dois (condição inversa ao caso_um) : Se a força da tropa defensora for maior que a força da tropa atacante
     caso_dois = (1/funcao_cerco)
 
     if @forca_de_ataque > forca_de_ataque_inimigo
@@ -67,6 +67,7 @@ class Tropa
   end
 
 # @param [Tropa] tropa
+# @return [Tropa]
   def concatena tropa
     if @jogador.eql? tropa.jogador then
       @tamanho += tropa.tamanho
@@ -90,6 +91,7 @@ class Tropa
   private
 
 # @param [Fixnum] forca_de_ataque_inimigo
+# @return [Fixnum]
   def funcao_cerco forca_de_ataque_inimigo
     Math.sqrt((@forca_de_ataque*forca_de_ataque_inimigo)/10*(@forca_de_ataque+forca_de_ataque_inimigo))
   end
@@ -98,6 +100,7 @@ class Tropa
 # @return [Tropa] Uma nova tropa com valores de ataque atualizados
   def separa quantidade_de_exercitos
     @tamanho -= quantidade_de_exercitos
+    atualiza_forca_de_ataque
     tropa_separada = Tropa.new(@jogador, quantidade_de_exercitos, @local)
     tropa_separada.atualiza_forca_de_ataque
     tropa_separada

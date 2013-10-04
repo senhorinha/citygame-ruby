@@ -24,6 +24,7 @@ class Local
   # @return [FalseClass]
   def ocupa tropa
     #TODO: Resolver esse monte de ifs
+    #TODO: Ataque automatico quando detectado tropas de jogadores diferentes.
     if local_disponivel? tropa.jogador
       if @tropas[0].jogador.eql? tropa.jogador
         @tropas[0].concatena tropa
