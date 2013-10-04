@@ -1,8 +1,7 @@
 # -*- encoding : utf-8 -*-
 
 class Local
-
-  attr_reader :@tropas
+  attr_reader :tropas
 
   def initialize id
     @tropas = []

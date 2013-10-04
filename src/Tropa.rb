@@ -42,7 +42,7 @@ class Tropa
         end
       end
     else
-      raise ArgumentError, 'Quantidade de exércitos, '+quantidade_de_exercitos+',  fora do intervalo aceitavel [0, '+tamanho_tropa +']'
+      raise ArgumentError, "Quantidade de exércitos '#{quantidade_de_exercitos}', fora do intervalo aceitavel [0, #{tamanho_tropa}]"
     end
 
   end
