@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Jogador
   attr_reader :id, :nome
   attr_reader :cidades

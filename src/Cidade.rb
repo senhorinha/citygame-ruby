@@ -1,8 +1,10 @@
+# -*- encoding : utf-8 -*-
 require_relative 'CitygameException'
 require_relative 'Local'
+require_relative 'Tropa'
 
 class Cidade < Local
-  attr_reader :id, :g_exercito, :g_tecnologia
+  attr_reader :g_exercito, :g_tecnologia
   attr_reader :jogador
   attr_reader :status
 
@@ -29,8 +31,10 @@ class Cidade < Local
   end
 
   def gerar_exercitos
-    @exercitos.push Exercito.new(@jogador, @g_exercito) if @status != STATUS_SOB_CERCO && @jogador != nil
-    # TODO: mesclar exercitos?
+    if @status != STATUS_SOB_CERCO && @jogador != nil
+      nova_tropa = Tropa.new(@jogador, @g_exercito, self)
+      ocupar nova_tropa
+    end
   end
 
   def taxa_tecnologia
