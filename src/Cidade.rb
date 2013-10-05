@@ -13,7 +13,7 @@ class Cidade < Local
   STATUS_SOB_CERCO  = 3
 
   def initialize id
-    @id = id
+    super id
     @g_exercito = 10
     @g_tecnologia = 0
     @jogador = nil
