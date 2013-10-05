@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-require_relative 'CitygameException'
+require_relative 'Exceptions/CitygameException'
 require_relative 'Local'
 require_relative 'Tropa'
 
