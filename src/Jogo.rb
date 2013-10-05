@@ -64,15 +64,11 @@ class Jogo
     raise CitygameException, "Essa cidade não existe ou não lhe pertence"
   end
 
-  def movimentar_exercitos id_fonte, id_destino, n_soldados
-    @jogador_atual.cidades.each do |cidade|
-      if cidade.id == id_fonte then
-        # gero movimento
-        return
-      end
-    end
+  def movimentar_tropas id_fonte, id_destino, n_soldados
+    # TODO: gerar movimento com:
+    # tropa_de_um_local.movimentar n_soldados, local_destino
 
-    raise CitygameException, "Essa cidade não existe ou não lhe pertence"
+    #raise CitygameException, "Essa cidade não existe ou não lhe pertence"
   end
 
 private
