@@ -14,8 +14,8 @@ class Jogo
   SUL = 6
   OESTE = 9
   NORTE = 12
-  QUANTIDADE_DE_CIDADES = 3
-  QUANTIDADE_DE_CAMPOS = 6 
+  QUANTIDADE_DE_CIDADES = 5
+  QUANTIDADE_DE_CAMPOS = 44 
 
   def initialize
     @turno = 0
@@ -69,6 +69,32 @@ class Jogo
     # tropa_de_um_local.movimentar n_soldados, local_destino
 
     #raise CitygameException, "Essa cidade não existe ou não lhe pertence"
+  end
+  
+  # Movimenta tropa com n_soldados do jogador_atual, a tropa parte do local cujo id é
+  # id_fonte e segue na direcao estabelecida um Local de distância
+  def movimentar_tropas id_fonte, n_soldados, direcao
+    if(direcao!=LESTE and direcao!=SUL and direcao!=OESTE and direcao!=NORTE)
+      raise CitygameException, "Direção não pertence a {LESTE, SUL, OESTE, NORTE}"
+    end
+      raise CitygameException, "Número de soldados inválido" if n_soldados < 1
+      
+    for vertice in locais.vertices
+      if(vertice.id == id_fonte and vertice.jogador == @jogador_atual)
+        tropa_selecionada = nil
+        for tropa in vertice.tropas
+          tropa_selecionada = tropa if tropa.jogador == @jogador_atual
+        end
+        raise CitygameException, "Número de soldados maior que o existente" if n_soldados > tropa_selecionada.tamanho
+        for sucessor in locais.sucessores(vertice)
+          vertice_destino, d = sucessor.v, sucessor.peso
+          sucesso = tropa_selecionada.movimentar(n_soldados, vertice_destino) if d == direcao
+          return vertice_destino if sucesso
+        end
+        raise CitygameException, "Não existem locais nesta direção"
+      end
+    end
+    raise CitygameException, "Essa cidade não existe ou não lhe pertence"
   end
 
 private
@@ -127,7 +153,7 @@ private
         k = k + 1
       end
     end
-
+   
     return grafo
   end
 
