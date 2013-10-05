@@ -8,14 +8,14 @@ class Jogo
   attr_reader :jogadores, :jogador_atual
   attr_reader :turno
   attr_reader :locais  # Digrafo
-  
+
   # Constantes
   LESTE = 3
   SUL = 6
   OESTE = 9
   NORTE = 12
   QUANTIDADE_DE_CIDADES = 5
-  QUANTIDADE_DE_CAMPOS = 44 
+  QUANTIDADE_DE_CAMPOS = 44
 
   def initialize
     @turno = 0
@@ -45,7 +45,6 @@ class Jogo
   # Passa a vez para o próximo jogador
   def passar_a_vez
     @jogador_atual.gerar_recursos()
-    # TODO movimentar tropas
 
     id_jogador_atual = @jogador_atual.id
     id_jogador_atual = id_jogador_atual + 1
@@ -64,14 +63,6 @@ class Jogo
     raise CitygameException, "Essa cidade não existe ou não lhe pertence"
   end
 
-  def movimentar_tropas id_fonte, id_destino, n_soldados
-
-    # TODO: gerar movimento com:
-    # tropa_de_um_local.movimentar n_soldados, local_destino
-
-    #raise CitygameException, "Essa cidade não existe ou não lhe pertence"
-  end
-  
   # Movimenta tropa com n_soldados do jogador_atual, a tropa parte do local cujo id é
   # id_fonte e segue na direcao estabelecida um Local de distância
   def movimentar_tropas id_fonte, n_soldados, direcao
@@ -79,7 +70,7 @@ class Jogo
       raise CitygameException, "Direção não pertence a {LESTE, SUL, OESTE, NORTE}"
     end
       raise CitygameException, "Número de soldados inválido" if n_soldados < 1
-      
+
     for vertice in locais.vertices
       if(vertice.id == id_fonte and vertice.jogador == @jogador_atual)
         tropa_selecionada = nil
@@ -118,13 +109,13 @@ private
       j = (QUANTIDADE_DE_CIDADES + i)
       loc[j] = Local.new(j)
     end
-    
+
     # Misturar locais
     for i in 0...n_loc
       destino_randomico = rand(n_loc)
       loc[i], loc[destino_randomico] = loc[destino_randomico], loc[i]
     end
-    
+
     # Criar grafo que representa os locais do jogo
     # Exemplo de mapa criado para auxiliar a criacao do grafo:
     #      local(04)--local(08)--local(10)-- ... --local(56)
@@ -133,7 +124,7 @@ private
     #         |          |           |     ..           |
     #         :          :           :        ..        :
     #         |          |           |           ..     |
-    #      local(07)--local(65)--local(79)-- ... --local(81)         
+    #      local(07)--local(65)--local(79)-- ... --local(81)
     k = 0
     largura = n_loc ** (0.5)
     comprimento = largura
@@ -154,7 +145,7 @@ private
         k = k + 1
       end
     end
-   
+
     return grafo
   end
 
