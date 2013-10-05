@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-require_relative 'Exceptions/SomaDeRecursosException'
+require_relative 'exceptions'
 require_relative 'Local'
 require_relative 'Tropa'
 

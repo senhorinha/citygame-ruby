@@ -1,10 +1,5 @@
 # -*- encoding : utf-8 -*-
-require_relative 'Exceptions/CitygameException'
-require_relative 'Exceptions/MinimoDeJogadoresException'
-require_relative 'Exceptions/NovoJogadorException'
-require_relative 'Exceptions/DirecaoException'
-require_relative 'Exceptions/LocalException'
-require_relative 'Exceptions/NumeroDeExercitosException'
+require_relative 'exceptions'
 require_relative 'Jogador'
 require_relative 'Cidade'
 require_relative 'Digrafo'
