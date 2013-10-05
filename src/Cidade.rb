@@ -5,7 +5,7 @@ require_relative 'Tropa'
 
 class Cidade < Local
   attr_reader :g_exercito, :g_tecnologia
-  attr_reader :jogador
+  attr_accessor :jogador
   attr_reader :status
 
   STATUS_PROTEGIDA  = 1
