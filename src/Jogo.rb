@@ -1,5 +1,8 @@
 # -*- encoding : utf-8 -*-
-require_relative 'CitygameException'
+require_relative 'Exceptions/CitygameException'
+require_relative 'Exceptions/DirecaoException'
+require_relative 'Exceptions/LocalException'
+require_relative 'Exceptions/NumeroDeExercitosException'
 require_relative 'Jogador'
 require_relative 'Cidade'
 require_relative 'Digrafo'
@@ -27,7 +30,7 @@ class Jogo
   # Parâmetros: nome (String) -> nome do novo jogador
   # Jogadores devem ser criados antes da partida iniciar. Caso novos jogadores tentem ser criados após a partida iniciar, o método lança um CitygameException
   def criar_jogador nome
-    raise CitygameException, "Impossível criar novos jogadores no meio de uma partida!" if @turno != 0
+    raise CitygameException, 'Impossível criar novos jogadores no meio de uma partida!' if @turno != 0
 
     jogador = Jogador.new @jogadores.size, nome
     @jogadores.push jogador
@@ -35,7 +38,7 @@ class Jogo
 
   # Inicia a partida, passando a vez para o primeiro jogador
   def iniciar
-    raise CitygameException, "Pelo menos dois jogadores devem existir para uma partida acontecer!" if @jogadores.size < 2
+    raise CitygameException, 'Pelo menos dois jogadores devem existir para uma partida acontecer!' if @jogadores.size < 2
 
     @turno = 1
     @jogador_atual = @jogadores[rand(jogadores.size)]
@@ -60,7 +63,7 @@ class Jogo
       end
     end
 
-    raise CitygameException, "Essa cidade não existe ou não lhe pertence"
+    raise LocalException, 'Essa cidade não existe ou não lhe pertence'
   end
 
   # Movimenta tropa com n_soldados do jogador_atual, a tropa parte do local cujo id é
@@ -68,28 +71,29 @@ class Jogo
   def movimentar_tropas id_fonte, n_soldados, direcao
 
     if direcao!=LESTE and direcao!=SUL and direcao!=OESTE and direcao!=NORTE
-      raise CitygameException, "Direção não pertence a {LESTE, SUL, OESTE, NORTE}"
+      raise DirecaoException, 'Direção não pertence a {LESTE, SUL, OESTE, NORTE}'
     end
-
 
     for vertice in locais.vertices
 
       unless vertice.id == id_fonte and vertice.jogador == @jogador_atual
-        raise CitygameException, "Essa cidade não existe ou não lhe pertence"
+        raise LocalException, 'Essa cidade não existe ou não lhe pertence'
       end
 
       for tropa in vertice.tropas
         tropa_selecionada = tropa if tropa.jogador == @jogador_atual
       end
 
-      raise CitygameException, "Número de soldados inválido" unless 0 < n_soldados <= tropa_selecionada.tamanho
+      unless 0 < n_soldados <= tropa_selecionada.tamanho
+        raise NumeroDeExercitosException, 'Número de soldados inválido'
+      end
 
       for sucessor in locais.sucessores(vertice)
         vertice_destino, d = sucessor.v, sucessor.peso
         sucesso = tropa_selecionada.movimentar(n_soldados, vertice_destino) if d == direcao
         return vertice_destino if sucesso
       end
-      raise CitygameException, "Não existem locais nesta direção"
+      raise DirecaoException, 'Não existem locais nesta direção'
     end
   end
 
@@ -106,7 +110,7 @@ private
 def criar_locais
   # Criar locais
   n_loc = QUANTIDADE_DE_CIDADES + QUANTIDADE_DE_CAMPOS
-  raise CitygameException, "Não existem locais suficientes para iniciar o jogo" if (n_loc**(0.5))%(n_loc**(0.5)).floor != 0
+  raise LocalException, 'Não existem locais suficientes para iniciar o jogo' if (n_loc**(0.5))%(n_loc**(0.5)).floor != 0
   loc = Array.new(n_loc)
   for i in 0...QUANTIDADE_DE_CIDADES
     loc[i] = Cidade.new(i)
