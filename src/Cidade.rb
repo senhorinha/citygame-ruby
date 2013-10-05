@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-require_relative 'Exceptions/CitygameException'
+require_relative 'Exceptions/SomaDeRecursosException'
 require_relative 'Local'
 require_relative 'Tropa'
 
@@ -24,7 +24,7 @@ class Cidade < Local
   # Parâmetros: tropas (inteiro), tecnologia (inteiro)
   # A soma de tropas e tecnologia não deve ultrapassar 10. Se isso acontecer, um CitygameException é lançado
   def balancear_recursos exercitos, tecnologia
-    raise CitygameException, "A soma dos exercitos e tecnologia não deve ser maior que 10" if exercitos + tecnologia > 10
+    raise SomaDeRecursosException, 'A soma dos exercitos e tecnologia não deve ser maior que 10' if exercitos + tecnologia > 10
 
     @g_exercito = exercitos
     @g_tecnologia = tecnologia

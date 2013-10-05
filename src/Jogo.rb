@@ -1,5 +1,7 @@
 # -*- encoding : utf-8 -*-
 require_relative 'Exceptions/CitygameException'
+require_relative 'Exceptions/MinimoDeJogadoresException'
+require_relative 'Exceptions/NovoJogadorException'
 require_relative 'Exceptions/DirecaoException'
 require_relative 'Exceptions/LocalException'
 require_relative 'Exceptions/NumeroDeExercitosException'
@@ -30,7 +32,7 @@ class Jogo
   # Parâmetros: nome (String) -> nome do novo jogador
   # Jogadores devem ser criados antes da partida iniciar. Caso novos jogadores tentem ser criados após a partida iniciar, o método lança um CitygameException
   def criar_jogador nome
-    raise CitygameException, 'Impossível criar novos jogadores no meio de uma partida!' if @turno != 0
+    raise NovoJogadorException, 'Impossível criar novos jogadores no meio de uma partida!' if @turno != 0
 
     jogador = Jogador.new @jogadores.size, nome
     @jogadores.push jogador
@@ -38,7 +40,7 @@ class Jogo
 
   # Inicia a partida, passando a vez para o primeiro jogador
   def iniciar
-    raise CitygameException, 'Pelo menos dois jogadores devem existir para uma partida acontecer!' if @jogadores.size < 2
+    raise MinimoDeJogadoresException, 'Pelo menos dois jogadores devem existir para uma partida acontecer!' if @jogadores.size < 2
 
     @turno = 1
     @jogador_atual = @jogadores[rand(jogadores.size)]
