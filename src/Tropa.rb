@@ -21,17 +21,20 @@ class Tropa
   # Movimenta uma quantidade de soldados da tropa para um novo local adjacente
   # @param [Fixnum] n_soldados Número de soldados a serem movidos
   # @param [Local] local_novo
+  # @return [Tropa]
   def movimentar n_soldados, local_novo
-    # TODO: checar se o local_novo é adjacente ao local atual
 
-    tropa_separada = separar n_soldados
+    tropa_em_movimento = separar n_soldados
 
-    if tropa_separada == self then
-      @local.desocupar self
+    if local_novo.ocupar tropa_em_movimento
+      if tropa_em_movimento == self
+        @local.desocupar tropa_em_movimento
+        @local = local_novo
+      end
     end
 
-    tropa_separada.local = local_novo
-    local_novo.ocupar tropa_separada
+    tropa_em_movimento
+
   end
 
   # Ataca uma tropa inimiga
