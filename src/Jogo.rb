@@ -39,8 +39,8 @@ class Jogo
     # TODO movimentar tropas
 
     id_jogador_atual = @jogador_atual.id
-    id_jogador_atual++
-    id_jogador_atual == 0 if id_jogador_atual >= @jogadores.size
+    id_jogador_atual = id_jogador_atual + 1
+    id_jogador_atual = 0 if id_jogador_atual >= @jogadores.size
     @jogador_atual == @jogadores[id_jogador_atual]
   end
 
@@ -56,6 +56,7 @@ class Jogo
   end
 
   def movimentar_tropas id_fonte, id_destino, n_soldados
+
     # TODO: gerar movimento com:
     # tropa_de_um_local.movimentar n_soldados, local_destino
 
