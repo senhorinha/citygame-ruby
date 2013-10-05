@@ -38,7 +38,7 @@ class Jogo
     raise CitygameException, "Pelo menos dois jogadores devem existir para uma partida acontecer!" if @jogadores.size < 2
 
     @turno = 1
-    @jogador_atual = @jogadores[0] # TODO: deixar aleatório
+    @jogador_atual = @jogadores[rand(jogadores.size)]
     criar_loc()
   end
 
