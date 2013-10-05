@@ -55,18 +55,6 @@ class Tropa
     end
   end
 
-  # Concatena a tropa com outra, aumentando o número de soldados da tropa do objeto atual
-  # @param [Tropa] tropa
-  def concatenar tropa
-    if @jogador.eql? tropa.jogador then
-      @tamanho += tropa.tamanho
-      atualizar_forca_de_ataque
-      tropa = self # Como há uma concatenação ambos referenciarão a mesma instância.
-      self
-    else
-      raise ArgumentError, 'Não é possível concatenar tropas de diferentes jogadores'
-    end
-  end
 
   protected
 
@@ -76,6 +64,20 @@ class Tropa
     @tamanho *= resultado
     atualizar_forca_de_ataque
   end
+
+  # Concatena a tropa com outra, aumentando o número de soldados da tropa do objeto atual
+  # @param [Tropa] tropa
+  def concatenar tropa
+
+    raise ArgumentError, 'Não é possível concatenar tropas de diferentes jogadores' unless @jogador.eql? tropa.jogador
+
+    @tamanho += tropa.tamanho
+    atualizar_forca_de_ataque
+    tropa = self # Como há uma concatenação ambos referenciarão a mesma instância.
+    self
+
+  end
+
 
   private
 
@@ -88,10 +90,6 @@ class Tropa
   # @param [Fixnum] n_soldados
   # @return [Tropa] Uma nova tropa com valores de ataque atualizados
   def separar n_soldados
-    unless (0 < n_soldados and n_soldados <= @tamanho) then
-      raise ArgumentError, "Quantidade de soldados '#{n_soldados}', fora do intervalo aceitável [1, #{@tamanho}]"
-    end
-
     return self if n_soldados == @tamanho
 
     @tamanho -= n_soldados
