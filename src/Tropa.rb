@@ -88,7 +88,7 @@ class Tropa
   # @param [Fixnum] n_soldados
   # @return [Tropa] Uma nova tropa com valores de ataque atualizados
   def separar n_soldados
-    unless 0 < n_soldados <= @tamanho then
+    unless (0 < n_soldados and n_soldados <= @tamanho) then
       raise ArgumentError, "Quantidade de soldados '#{n_soldados}', fora do intervalo aceitável [1, #{@tamanho}]"
     end
 

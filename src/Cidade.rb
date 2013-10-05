@@ -5,7 +5,7 @@ require_relative 'Tropa'
 
 class Cidade < Local
   attr_reader :g_exercito, :g_tecnologia
-  attr_reader :jogador
+  attr_accessor :jogador
   attr_reader :status
 
   STATUS_PROTEGIDA  = 1
@@ -13,7 +13,7 @@ class Cidade < Local
   STATUS_SOB_CERCO  = 3
 
   def initialize id
-    @id = id
+    super id
     @g_exercito = 10
     @g_tecnologia = 0
     @jogador = nil
