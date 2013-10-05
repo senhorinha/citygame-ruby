@@ -9,7 +9,7 @@ class ModoNovoJogo < Modo
     @comandos = ['exit', 'help', 'criar_jogador', 'status', 'iniciar']
   end
 
-  def sufixo
+  def prefixo
     return 'new-game ~> '
   end
 

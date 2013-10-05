@@ -27,7 +27,7 @@ Readline.completion_append_character = ' '
 while modo.ativo do
   Readline.completion_proc = modo.completion_proc
 
-  input = Readline.readline(modo.sufixo, true)
+  input = Readline.readline(modo.prefixo, true)
   command_hash = parser.parse(input)
 
   modo = modo.submeter_comando command_hash

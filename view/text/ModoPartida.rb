@@ -8,7 +8,7 @@ class ModoPartida < Modo
     @comandos = ['exit', 'help', 'passar']
   end
 
-  def sufixo
+  def prefixo
     return "turno#{@jogo.turno} @ #{@jogo.jogador_atual.nome} ~> "
   end
 

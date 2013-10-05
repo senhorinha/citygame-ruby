@@ -8,7 +8,7 @@ class Modo
     @jogo = jogo
   end
 
-  def sufixo
+  def prefixo
     return ' ~> '
   end
 
