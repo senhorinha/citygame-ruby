@@ -49,6 +49,7 @@ class Jogo
     id_jogador_atual = id_jogador_atual + 1
     id_jogador_atual = 0 if id_jogador_atual >= @jogadores.size
     @jogador_atual = @jogadores[id_jogador_atual]
+    @turno += 1
   end
 
   def balancear_recursos id_cidade, exercitos, tecnologia
