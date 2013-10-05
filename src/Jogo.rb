@@ -39,7 +39,6 @@ class Jogo
 
     @turno = 1
     @jogador_atual = @jogadores[rand(jogadores.size)]
-    criar_loc()
   end
 
   # Passa a vez para o próximo jogador
