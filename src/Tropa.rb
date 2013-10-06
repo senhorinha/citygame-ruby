@@ -1,6 +1,10 @@
 # -*- encoding : utf-8 -*-
 
+require_relative 'Local'
+require_relative 'Jogador'
+
 class Tropa
+
   attr_reader :local, :tamanho, :jogador, :forca_de_ataque
 
   PHI = (1 + Math.sqrt(5))/2
@@ -37,9 +41,15 @@ class Tropa
 
   # Ataca uma tropa inimiga
   # @param [Tropa] tropa_inimiga
-  def atacar tropa_inimiga
+  # @param [FalseClass,TrueClass] com_bonus
+  def atacar tropa_inimiga, com_bonus
     forca_de_ataque_inimigo = tropa_inimiga.forca_de_ataque
     funcao_cerco = funcao_cerco(forca_de_ataque_inimigo)
+
+    # Bônus para ataque em cidade [ADICIONA]
+    if com_bonus
+      @forca_de_ataque += 10*@jogador.tecnologia
+    end
 
     #caso_um   : Se a força da tropa de ataque for maior que a força da tropa de defesa
     caso_um = ((@forca_de_ataque/forca_de_ataque_inimigo)**PHI)*(1/funcao_cerco)
@@ -53,6 +63,12 @@ class Tropa
       atualizar_valores_pos_batalha caso_dois
       tropa_inimiga.atualizar_valores_pos_batalha caso_um
     end
+
+    # Bônus para ataque em cidade [Volta ao estado inicial]
+    if com_bonus
+      @forca_de_ataque -= 10*@jogador.tecnologia
+    end
+
   end
 
 
