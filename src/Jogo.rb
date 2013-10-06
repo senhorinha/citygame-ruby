@@ -54,7 +54,7 @@ class Jogo
 
   def balancear_recursos id_cidade, exercitos, tecnologia
     @jogador_atual.cidades.each do |cidade|
-      if cidade.id == id_cidade then
+      if cidade.id == id_cidade
         cidade.balancear_recursos exercitos, tecnologia
         return
       end
