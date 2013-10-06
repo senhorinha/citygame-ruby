@@ -7,8 +7,8 @@ class Local
 
   attr_reader :id, :tropas, :is_cidade
 
-
-  # @param [is_cidade] true se local for cidade
+  # @param [Fixnum] id identificador do Local
+  # @param [FalseClass,TrueClass] is_cidade true se local for cidade
   def initialize id, is_cidade
     @id = id
     @tropas = []
@@ -21,7 +21,7 @@ class Local
   def ocupar tropa
     # Checa se existem tropas amigas no local, se sim, mescla as tropas
     @tropas.each do |outra_tropa|
-      if outra_tropa.jogador == tropa.jogador then
+      if outra_tropa.jogador == tropa.jogador
         outra_tropa.concatenar(tropa)
         checar_batalhas tropa
         return true
