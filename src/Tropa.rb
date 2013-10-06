@@ -5,9 +5,7 @@ require_relative 'Jogador'
 
 class Tropa
 
-  attr_reader :local, :tamanho, :jogador, :forca_de_ataque
-
-  PHI = (1 + Math.sqrt(5))/2
+  attr_reader :local, :tamanho, :jogador, :forca
 
   # @param [Jogador] jogador
   # @param [Fixnum] tamanho
@@ -18,8 +16,8 @@ class Tropa
     @tamanho = tamanho
   end
 
-  def atualizar_forca_de_ataque
-    @forca_de_ataque = @jogador.tecnologia * @tamanho
+  def atualizar_forca
+    @forca = @jogador.tecnologia * @tamanho
   end
 
   # Movimenta uma quantidade de soldados da tropa para um novo local adjacente
@@ -39,38 +37,6 @@ class Tropa
     true
   end
 
-  # Ataca uma tropa inimiga
-  # @param [Tropa] tropa_inimiga
-  # @param [FalseClass,TrueClass] com_bonus
-  def atacar tropa_inimiga, com_bonus
-    forca_de_ataque_inimigo = tropa_inimiga.forca_de_ataque
-    funcao_cerco = funcao_cerco(forca_de_ataque_inimigo)
-
-    # Bônus para ataque em cidade [ADICIONA]
-    if com_bonus
-      @forca_de_ataque += 10*@jogador.tecnologia
-    end
-
-    #caso_um   : Se a força da tropa de ataque for maior que a força da tropa de defesa
-    caso_um = ((@forca_de_ataque/forca_de_ataque_inimigo)**PHI)*(1/funcao_cerco)
-    #caso_dois : Se a força da tropa de defesa for maior que a força da tropa de ataque
-    caso_dois = (1/funcao_cerco)
-
-    if @forca_de_ataque > forca_de_ataque_inimigo
-      atualizar_valores_pos_batalha caso_um
-      tropa_inimiga.atualizar_valores_pos_batalha caso_dois
-    else
-      atualizar_valores_pos_batalha caso_dois
-      tropa_inimiga.atualizar_valores_pos_batalha caso_um
-    end
-
-    # Bônus para ataque em cidade [Volta ao estado inicial]
-    if com_bonus
-      @forca_de_ataque -= 10*@jogador.tecnologia
-    end
-
-  end
-
 
   protected
 
@@ -78,7 +44,7 @@ class Tropa
   # @param [Fixnum] resultado
   def atualizar_valores_pos_batalha resultado
     @tamanho *= resultado
-    atualizar_forca_de_ataque
+    atualizar_forca
   end
 
   # Concatena a tropa com outra, aumentando o número de soldados da tropa do objeto atual
@@ -88,7 +54,7 @@ class Tropa
     raise ArgumentError, 'Não é possível concatenar tropas de diferentes jogadores' unless @jogador.eql? tropa.jogador
 
     @tamanho += tropa.tamanho
-    atualizar_forca_de_ataque
+    atualizar_forca
     tropa = self # Como há uma concatenação ambos referenciarão a mesma instância.
     self
 
@@ -97,21 +63,16 @@ class Tropa
 
   private
 
-  # @param [Fixnum] forca_de_ataque_inimigo
-  def funcao_cerco forca_de_ataque_inimigo
-    Math.sqrt((@forca_de_ataque*forca_de_ataque_inimigo)/10*(@forca_de_ataque+forca_de_ataque_inimigo))
-  end
-
   # Retorna um novo objeto Tropa com o tamanho estipulado. Caso o tamanho de separação seja igual ao tamanho da tropa, a própria tropa é retornada
-  # @param [Fixnum] n_soldados
+  # @param [Fixnum] n_soldados representa a quantidade de soldados que serão separados da tropa inicial
   # @return [Tropa] Uma nova tropa com valores de ataque atualizados
   def separar n_soldados
     return self if n_soldados == @tamanho
 
     @tamanho -= n_soldados
     tropa_separada = Tropa.new(@jogador, n_soldados, @local)
-    tropa_separada.atualizar_forca_de_ataque()
-    self.atualizar_forca_de_ataque()
+    tropa_separada.atualizar_forca
+    self.atualizar_forca
     return tropa_separada
   end
 
