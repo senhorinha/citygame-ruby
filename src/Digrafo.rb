@@ -29,10 +29,10 @@ class Digrafo
   def to_s
     r = super.to_s << "\n"
     @vertices.each do |vertice, vizinhanca|
-      r <<= "|--- " << vertice.to_s << " => ["
+      r <<= '|--- ' << vertice.to_s << ' => ['
       sucessores_s = vizinhanca.suc.map { |aresta| "(#{aresta.v}, #{aresta.peso})" }
-      r <<= sucessores_s.join ", "
-      r <<= "]"
+      r <<= sucessores_s.join ', '
+      r <<= ']'
       r <<= "\n"
     end
 
@@ -64,7 +64,7 @@ class Digrafo
   # Parâmetros
   # => v1: vértice pesquisado
   def sucessores v1
-    raise DigrafoException, "O vértice não pertence ao grafo" unless @vertices.include? v1
+    raise DigrafoException, 'O vértice não pertence ao grafo' unless @vertices.include? v1
     return @vertices[v1].suc
   end
 
@@ -73,7 +73,7 @@ class Digrafo
   # Parâmetros
   # => v1: vértice pesquisado
   def antecessores v1
-    raise DigrafoException, "O vértice não pertence ao grafo" unless @vertices.include? v1
+    raise DigrafoException, 'O vértice não pertence ao grafo' unless @vertices.include? v1
     return @vertices[v1].ant
   end
 
@@ -82,7 +82,7 @@ class Digrafo
   # Paramêtros:
   #   - v1: Vértice a ser adicionado
   def adicionar_vertice v1
-    raise DigrafoException, "O vértice já pertence ao grafo" if @vertices.include? v1
+    raise DigrafoException, 'O vértice já pertence ao grafo' if @vertices.include? v1
 
     @vertices[v1] = Vizinhanca.new
     @vertices[v1].suc = Array.new
@@ -95,8 +95,8 @@ class Digrafo
   # => v1, v2: Vértices a serem conectados, sendo v1 o vértice de origem e v2 o vértice de destino
   # => peso: peso da aresta {default = 1}
   def conectar v1, v2, peso = 1
-    raise DigrafoException, "O vértice v1 não pertence ao grafo" unless @vertices.include? v1
-    raise DigrafoException, "O vértice v2 não pertence ao grafo" unless @vertices.include? v2
+    raise DigrafoException, 'O vértice v1 não pertence ao grafo' unless @vertices.include? v1
+    raise DigrafoException, 'O vértice v2 não pertence ao grafo' unless @vertices.include? v2
 
     @vertices[v1].suc.push Aresta.new(v2, peso)
     @vertices[v2].ant.push Aresta.new(v1, peso)
@@ -108,8 +108,8 @@ class Digrafo
   # Parâmetros
   # => v1, v2: Vértices a serem desconectados
   def desconectar v1, v2
-    raise DigrafoException, "O vértice v1 não pertence ao grafo" unless @vertices.include? v1
-    raise DigrafoException, "O vértice v2 não pertence ao grafo" unless @vertices.include? v2
+    raise DigrafoException, 'O vértice v1 não pertence ao grafo' unless @vertices.include? v1
+    raise DigrafoException, 'O vértice v2 não pertence ao grafo' unless @vertices.include? v2
 
     @vertices[v1].suc.delete_if { |aresta| aresta.v == v2 }
     @vertices[v2].ant.delete_if { |aresta| aresta.v == v1 }
@@ -120,7 +120,7 @@ class Digrafo
   # Paramêtros:
   # => v1: Vértice a ser removido
   def remover_vertice v1
-    raise DigrafoException, "O vértice v1 não pertence ao grafo" unless @vertices.include? v1
+    raise DigrafoException, 'O vértice v1 não pertence ao grafo' unless @vertices.include? v1
 
     # Removendo arestas relacionadas
     @vertices[v1].suc.each { |aresta|
