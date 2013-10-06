@@ -1,32 +1,39 @@
-class FilaDeAtividades
+# -*- encoding : utf-8 -*-
 
-  attr_reader :tropas_atacantes, :tropas_defensoras
+require_relative 'Local'
+require_relative 'Tropa'
+
+class FilaDeAtaques
+
+  attr_reader :ataques
 
 
-  def initialize jogador
-    @tropas_atacantes = []
-    @tropas_defensoras = []
+  def initialize
+    @ataques = []
   end
 
+  # @param [Local] local onde será travada a batalha
   # @param [Tropa] tropa_atacante
   # @param [Tropa] tropa_defensora
-  def adicionar_ataque tropa_atacante, tropa_defensora
-    @ataques.push tropa_atacante
-    @ataques.push tropa_defensora
+  def adicionar local, tropa_atacante, tropa_defensora
+
+    @ataques.each do |ataque|
+      # Não adiciona ataque pois só houve concatenação e referências já estão atualizadas
+      if ataque.local.eql? local
+        return false
+      end
+    end
+    @ataques.push Ataque.new local, tropa_atacante, tropa_defensora
   end
 
-  def executar_atividades
-
-    for i in 0..30
-      tropa_atacante = @tropas_atacantes[i]
-      tropa_defensora = @tropa_defensora[i]
-
-      # Se uma das tropas perdeu ou se estão em locais diferentes acaba a batalha
-      if tropa_atacante.tamanho == 0 or tropa_defensora.tamanho == 0 or tropa_atacante.local != tropa_defensora.local
-        @tropas_atacantes.delete tropa_atacante
-        @tropa_defensora.delete tropa_defensora
+  # Executa todos os ataques presentes na fila
+  def executar_ataques
+    #Percorre a fila executando os ataques
+    @ataques.each do |ataque|
+      #Se batalha acabou, retira-o da fila
+      if ataque.executar
+        @ataques.pop ataque
       end
-      tropa_atacante.atacar tropa_defensora
     end
   end
 
