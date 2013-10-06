@@ -1,4 +1,5 @@
 # -*- encoding : utf-8 -*-
+
 require_relative 'exceptions'
 require_relative 'Local'
 require_relative 'Tropa'
@@ -12,8 +13,8 @@ class Cidade < Local
   STATUS_SOB_ATAQUE = 2
   STATUS_SOB_CERCO  = 3
 
-  def initialize id
-    super id
+  def initialize id, is_cidade
+    super id,is_cidade
     @g_exercito = 10
     @g_tecnologia = 0
     @jogador = nil
