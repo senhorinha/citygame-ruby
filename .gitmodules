@@ -1,0 +1,3 @@
+[submodule "src/simple-graph"]
+	path = src/simple-graph
+	url = https://github.com/CarlosBonetti/simple-graph.git
