@@ -26,10 +26,11 @@ class Jogador
     @tecnologia = tecnologia*(1 + tec)
   end
 
-  #Deve ser chamado ao final de cada turno para executar todos os ataques que estão na espera
-
-  def adicionar_ataque local, tropa_atacante, tropa_atacante
-    fila_de_ataques.adicionar local, tropa_atacante, tropa_atacante
+  # @param [Local] local
+  # @param [Tropa] tropa_atacante
+  # @param [Tropa] tropa_defensora
+  def adicionar_ataque local, tropa_atacante, tropa_defensora
+    fila_de_ataques.adicionar local, tropa_atacante, tropa_defensora
   end
 
   # Método que deve ser executado ao final do turno deste jogador!
