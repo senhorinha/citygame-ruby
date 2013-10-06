@@ -2,6 +2,9 @@
 
 require_relative 'Local'
 require_relative 'Tropa'
+require_relative 'Ataque'
+require_relative 'AtaqueRural'
+require_relative 'AtaqueUrbano'
 
 class FilaDeAtaques
 
@@ -23,7 +26,14 @@ class FilaDeAtaques
         return false
       end
     end
-    @ataques.push Ataque.new local, tropa_atacante, tropa_defensora
+
+    if local.is_cidade
+      @ataques.push AtaqueUrbano.new local, tropa_atacante, tropa_defensora
+    else
+      @ataques.push AtaqueRural.new local, tropa_atacante, tropa_defensora
+    end
+    true
+
   end
 
   # Executa todos os ataques presentes na fila
