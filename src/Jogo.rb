@@ -89,6 +89,26 @@ class Jogo
     raise LocalException, "Essa cidade não existe ou não lhe pertence"
   end
 
+  # Recebe uma string {NORTE, SUL, LESTE, OESTE} e retorna um inteiro que representa a direção informada
+  # @param [String] Um dentre {NORTE, SUL, LESTE, OESTE}
+  # @return [Integer] Int que representa a direção ou nil em caso de direção não reconhecida
+  def direcao str_direction
+    direcao = nil
+
+    case str_direction.upcase
+      when 'NORTE'
+        direcao = NORTE
+      when 'SUL'
+        direcao = SUL
+      when 'LESTE'
+        direcao = LESTE
+      when 'OESTE'
+        direcao = OESTE
+    end
+
+    return direcao
+  end
+
 private
 
   # Cria todos os locais do jogo como um tabuleiro virtual quadrado
