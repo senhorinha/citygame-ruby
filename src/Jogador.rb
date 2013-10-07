@@ -38,4 +38,14 @@ class Jogador
     fila_de_ataques.executar_ataques
   end
 
+  # Atribui uma cidade ao jogador, adicionando na lista de cidades conquistadas e alterando a referência do jogador no objeto cidade
+  # @param [Cidade]
+  # @return [Boolean] true se a cidade foi atribuída ou false se a cidade já pertencia ao jogador
+  def atribuir_cidade cidade
+    return false if @cidades.include? cidade
+    cidade.jogador = self
+    @cidades.push cidade
+    return true
+  end
+
 end
