@@ -37,8 +37,10 @@ class Modo
       else
         r = self.send(command_hash[:command], *command_hash[:options])
       end
-    rescue => e
+    rescue ArgumentError => e
       error_msg "Número de argumentos inválido. Digite 'help' para ver o número correto de argumentos do comando"
+    rescue => e
+      warning_msg e.inspect
     end
 
     return r if r.kind_of? Modo
