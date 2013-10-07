@@ -1,11 +1,12 @@
 # -*- encoding : utf-8 -*-
+require_relative '../../src/Jogo'
 require_relative 'Modo'
 
 class ModoPartida < Modo
 
   def initialize jogo
     super jogo
-    @comandos = ['exit', 'help', 'passar']
+    @comandos = ['exit', 'help', 'passar', 'move']
   end
 
   def prefixo
@@ -14,14 +15,27 @@ class ModoPartida < Modo
 
   def help
     puts "  Opções de partida:"
-    puts "   * help           - Exibe este texto de ajuda"
-    puts "   * exit           - Encerra o jogo"
-    puts "   * passar         - Passa a vez"
+    puts "   * help                                     - Exibe este texto de ajuda"
+    puts "   * exit                                     - Encerra o jogo"
+    puts "   * passar                                   - Passa a vez"
+    puts "   * move [ID_FONTE], [N_SOLDADOS], [DIRECAO] - Move a quantidade de soldados de um local na direção definida. DIRECAO pode ser {NORTE, SUL, LESTE, OESTE}"
     puts ""
   end
 
   def passar
     @jogo.passar_a_vez
+  end
+
+  def move id_fonte, n_soldados, direcao
+    id_fonte = id_fonte.to_i
+    n_soldados = n_soldados.to_i
+    direcao = @jogo.direcao direcao
+
+    begin
+      @jogo.movimentar_tropas id_fonte, n_soldados, direcao
+    rescue CitygameException => e
+      error_msg e.to_s
+    end
   end
 
 end
