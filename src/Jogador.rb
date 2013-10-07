@@ -22,7 +22,7 @@ class Jogador
       cidade.gerar_exercitos()
       tec += cidade.taxa_tecnologia()
     end
-    tec /= 100
+    tec /= 100.0
     @tecnologia = tecnologia*(1 + tec)
   end
 
