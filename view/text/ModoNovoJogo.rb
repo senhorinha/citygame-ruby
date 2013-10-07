@@ -15,11 +15,11 @@ class ModoNovoJogo < Modo
 
   def help
     puts "  Opções de criação de novo jogo:"
-    puts "    help                 - Exibe este texto de ajuda"
-    puts "    exit                 - Encerra o jogo"
-    puts "    criar_jogador [nome] - Cria um novo jogador com o nome passado"
-    puts "    status               - Mostra os jogadores atuais"
-    puts "    iniciar              - Inicia a partida com os jogadores atuais, iniciando o modo 'partida'"
+    puts "    * help                 - Exibe este texto de ajuda"
+    puts "    * exit                 - Encerra o jogo"
+    puts "    * criar_jogador [nome] - Cria um novo jogador com o nome passado"
+    puts "    * status               - Mostra os jogadores atuais"
+    puts "    * iniciar              - Inicia a partida com os jogadores atuais, iniciando o modo 'partida'"
     puts ""
   end
 

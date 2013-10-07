@@ -14,9 +14,9 @@ class ModoPartida < Modo
 
   def help
     puts "  Opções de partida:"
-    puts "    help                 - Exibe este texto de ajuda"
-    puts "    exit                 - Encerra o jogo"
-    puts "    passar               - Passa a vez"
+    puts "   * help           - Exibe este texto de ajuda"
+    puts "   * exit           - Encerra o jogo"
+    puts "   * passar         - Passa a vez"
     puts ""
   end
 
