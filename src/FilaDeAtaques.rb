@@ -42,7 +42,7 @@ class FilaDeAtaques
     @ataques.each do |ataque|
       #Se batalha acabou, retira-o da fila
       if ataque.executar
-        @ataques.pop ataque
+        @ataques.delete ataque
       end
     end
   end
