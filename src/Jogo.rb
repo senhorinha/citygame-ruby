@@ -74,7 +74,7 @@ class Jogo
         for tropa in vertice.tropas
           tropa_selecionada = tropa if tropa.jogador == @jogador_atual
         end
-        raise NumeroDeExercitosException, "Número de soldados maior que o existente" if n_soldados > tropa_selecionada.tamanho
+        raise NumeroDeExercitosException, "Número de soldados maior que o existente" if tropa_selecionada.nil? or n_soldados > tropa_selecionada.tamanho
         for sucessor in @mapa.grafo.sucessores(vertice)
           vertice_destino, d = sucessor.v, sucessor.peso
           sucesso = tropa_selecionada.movimentar(n_soldados, vertice_destino) if d == direcao
