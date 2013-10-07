@@ -20,15 +20,15 @@ puts ""
 
 jogo = Jogo.new
 parser = CommandParser.new
-modo = ModoNovoJogo.new jogo
+modo = ModoNovoJogo.new jogo # Modo inicial
 
-Readline.completion_append_character = ' '
+Readline.completion_append_character = ' ' # Caracter impresso após uma chamada de auto completar
 
 while modo.ativo do
-  Readline.completion_proc = modo.completion_proc
+  Readline.completion_proc = modo.completion_proc # Atribui o processo de auto completar ao interpretador de comandos
 
-  input = Readline.readline(modo.prefixo, true)
-  command_hash = parser.parse(input)
+  input = Readline.readline(modo.prefixo, true) # Lê um novo comando do input padrão, salvando no histórico de comandos digitados
+  command_hash = parser.parse(input)            # Interpreta a string digitada
 
-  modo = modo.submeter_comando command_hash
+  modo = modo.submeter_comando command_hash     # Submete o comando ao modo de jogo atual, recebendo a instância do próximo modo de jogo (pode ser o mesmo ou um novo)
 end
