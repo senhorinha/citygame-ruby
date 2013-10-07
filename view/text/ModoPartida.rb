@@ -6,7 +6,7 @@ class ModoPartida < Modo
 
   def initialize jogo
     super jogo
-    @comandos = ['exit', 'help', 'passar', 'status', 'balancear', 'move']
+    @comandos = ['exit', 'help', 'passar', 'status', 'map', 'balancear', 'move']
   end
 
   def prefixo
@@ -19,6 +19,7 @@ class ModoPartida < Modo
     puts "   * exit                                     - Encerra o jogo"
     puts "   * passar                                   - Passa a vez"
     puts "   * status                                   - Mostra informações do jogador e recursos"
+    puts "   * map                                      - Exibe o mapa"
     puts "   * balancear [ID_CIDADE], [TROPAS], [TECNO] - Altera o balanceamento de tropas e tecnologia produzidas por uma cidade"
     puts "   * move [ID_FONTE], [N_SOLDADOS], [DIRECAO] - Move a quantidade de soldados de um local na direção definida. DIRECAO pode ser {NORTE, SUL, LESTE, OESTE}"
     puts ""
@@ -35,6 +36,10 @@ class ModoPartida < Modo
     @jogo.jogador_atual.cidades.each do |cidade|
       puts "  cidade##{cidade.id} ~> soldados: +#{cidade.g_exercito} | tecnologia: +#{cidade.g_tecnologia}"
     end
+  end
+  
+  def map
+    puts @jogo.mapa.to_s
   end
 
   def balancear id_cidade, tropas, tecnologia
