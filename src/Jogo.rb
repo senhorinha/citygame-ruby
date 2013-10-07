@@ -54,7 +54,7 @@ class Jogo
 
   def balancear_recursos id_cidade, exercitos, tecnologia
     @jogador_atual.cidades.each do |cidade|
-      if cidade.id == id_cidade then
+      if cidade.id == id_cidade
         cidade.balancear_recursos exercitos, tecnologia
         return
       end
@@ -108,11 +108,11 @@ private
     raise LocalException, 'Não existem locais suficientes para iniciar o jogo' if (n_loc**(0.5))%(n_loc**(0.5)).floor != 0
     loc = Array.new(n_loc)
     for i in 0...QUANTIDADE_DE_CIDADES
-      loc[i] = Cidade.new(i)
+      loc[i] = Cidade.new(i,true)
     end
     for i in 0...QUANTIDADE_DE_CAMPOS
       j = (QUANTIDADE_DE_CIDADES + i)
-      loc[j] = Local.new(j)
+      loc[j] = Local.new(j,false)
     end
 
     # Misturar locais
