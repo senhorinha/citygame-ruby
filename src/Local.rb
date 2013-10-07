@@ -51,7 +51,7 @@ class Local
   # @param [Tropa] tropa_atacante : Ultima tropa a entrar na local, responsável por iniciar o ataque
   def checar_batalhas tropa_atacante
     @tropas.each do |tropa|
-      unless tropa.nil? and tropa.eql? tropa_atacante
+      if !tropa.nil? and tropa != tropa_atacante
         tropa_atacante.jogador.adicionar_ataque self, tropa_atacante, tropa
       end
     end
