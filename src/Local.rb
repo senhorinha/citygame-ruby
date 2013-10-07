@@ -23,7 +23,7 @@ class Local
     @tropas.each do |outra_tropa|
       if outra_tropa.jogador == tropa.jogador
         outra_tropa.concatenar(tropa)
-        checar_batalhas tropa
+        checar_batalhas outra_tropa
         return true
       end
     end
@@ -54,6 +54,13 @@ class Local
       if !tropa.nil? and tropa != tropa_atacante
         tropa_atacante.jogador.adicionar_ataque self, tropa_atacante, tropa
       end
+    end
+  end
+
+  # Elimina as tropas nulas ou de tamanho 0 do local
+  def limpar_os_mortos
+    @tropas.each do |tropa|
+      @tropas.delete tropa if tropa.nil? or tropa.tamanho < 1
     end
   end
 

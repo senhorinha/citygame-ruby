@@ -38,6 +38,8 @@ class Ataque
       @tropa_atacante.atualizar_valores_pos_batalha caso_dois
       @tropa_defensora.atualizar_valores_pos_batalha caso_um
     end
+
+    @local.limpar_os_mortos
     return terminou?
   end
 
@@ -64,7 +66,7 @@ class Ataque
 
   # @return [FalseClass,TrueClass] retorna true se batalha acabou
   def terminou?
-    true if @tropa_atacante.tamanho == 0 or @tropa_defensora.tamanho == 0 or @tropa_atacante.local != @tropa_defensora.local
+    @tropa_atacante.tamanho < 1 or @tropa_defensora.tamanho < 1 or @tropa_atacante.local != @tropa_defensora.local
   end
 
 end

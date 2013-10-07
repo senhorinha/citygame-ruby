@@ -44,8 +44,7 @@ class Tropa
 
     @tamanho += tropa.tamanho
     atualizar_forca
-    tropa = self # Como há uma concatenação ambos referenciarão a mesma instância.
-    self
+    return self
   end
 
   protected
