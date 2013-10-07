@@ -61,7 +61,10 @@ class ModoPartida < Modo
       @jogo.movimentar_tropas id_fonte, n_soldados, direcao
     rescue CitygameException => e
       error_msg e.to_s
+      return
     end
+
+    success_msg "Tropa movida"
   end
 
 end
