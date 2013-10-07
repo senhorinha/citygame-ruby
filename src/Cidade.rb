@@ -42,4 +42,10 @@ class Cidade < Local
     @g_tecnologia if @status != STATUS_SOB_CERCO && @jogador != nil
   end
 
+  # Retorna verdadeiro se nenhum jogador está em posse da cidade
+  # @return [Boolean]
+  def abandonada?
+    return @jogador == nil
+  end
+
 end
