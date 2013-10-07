@@ -103,4 +103,14 @@ class Mapa
     @grafo = grafo
   end
 
+  # Atribui uma cidade aleatório do mapa ao jogador
+  # @param [Jogador]
+  def atribuir_cidade_ao_jogador jogador
+    begin
+      rand_city = @cidades[rand(@cidades.size)]
+    end while (!rand_city.abandonada?) # Se a cidade já foi atribuída a alguém, atribui outra cidade
+
+    jogador.atribuir_cidade rand_city
+  end
+
 end

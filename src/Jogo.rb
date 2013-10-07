@@ -30,7 +30,10 @@ class Jogo
     raise MinimoDeJogadoresException, 'Pelo menos dois jogadores devem existir para uma partida acontecer!' if @jogadores.size < 2
 
     @mapa.criar_locais
-    # TODO: atribuir cidades aos jogadores
+
+    @jogadores.each do |jogador|
+      @mapa.atribuir_cidade_ao_jogador jogador
+    end
 
     @turno = 1
     @jogador_atual = @jogadores[rand(jogadores.size)]
