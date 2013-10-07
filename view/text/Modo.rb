@@ -75,6 +75,11 @@ class Modo
     puts msg.colorize :red
   end
 
+  # Limpa o terminal
+  def clear
+    system 'clear' unless system 'cls'
+  end
+
 private
 
   # Checa se o comando é válido dentro do contexto do modo atual

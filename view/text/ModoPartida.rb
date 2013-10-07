@@ -24,6 +24,7 @@ class ModoPartida < Modo
 
   def passar
     @jogo.passar_a_vez
+    clear()
   end
 
   def move id_fonte, n_soldados, direcao
