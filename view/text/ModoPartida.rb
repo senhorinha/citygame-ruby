@@ -6,7 +6,7 @@ class ModoPartida < Modo
 
   def initialize jogo
     super jogo
-    @comandos = ['exit', 'help', 'passar', 'status', 'move']
+    @comandos = ['exit', 'help', 'passar', 'status', 'balancear', 'move']
   end
 
   def prefixo
@@ -19,6 +19,7 @@ class ModoPartida < Modo
     puts "   * exit                                     - Encerra o jogo"
     puts "   * passar                                   - Passa a vez"
     puts "   * status                                   - Mostra informações do jogador e recursos"
+    puts "   * balancear [ID_CIDADE], [TROPAS], [TECNO] - Altera o balanceamento de tropas e tecnologia produzidas por uma cidade"
     puts "   * move [ID_FONTE], [N_SOLDADOS], [DIRECAO] - Move a quantidade de soldados de um local na direção definida. DIRECAO pode ser {NORTE, SUL, LESTE, OESTE}"
     puts ""
   end
@@ -34,6 +35,21 @@ class ModoPartida < Modo
     @jogo.jogador_atual.cidades.each do |cidade|
       puts "  cidade##{cidade.id} ~> soldados: +#{cidade.g_exercito} | tecnologia: +#{cidade.g_tecnologia}"
     end
+  end
+
+  def balancear id_cidade, tropas, tecnologia
+    id_cidade = id_cidade.to_i
+    tropas = tropas.to_i
+    tecnologia = tecnologia.to_i
+
+    begin
+      @jogo.balancear_recursos id_cidade, tropas, tecnologia
+    rescue CitygameException => e
+      error_msg e.to_s
+      return
+    end
+
+    success_msg "Quantidade de recursos produzidos alterada"
   end
 
   def move id_fonte, n_soldados, direcao
