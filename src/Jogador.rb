@@ -13,7 +13,7 @@ class Jogador
     @nome = nome
     @tecnologia = 1
     @cidades = []
-    @fila_de_ataques = FilaDeAtaques
+    @fila_de_ataques = FilaDeAtaques.new
   end
 
   def gerar_recursos
