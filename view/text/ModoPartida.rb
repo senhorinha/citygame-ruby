@@ -6,7 +6,7 @@ class ModoPartida < Modo
 
   def initialize jogo
     super jogo
-    @comandos = ['exit', 'help', 'passar', 'move']
+    @comandos = ['exit', 'help', 'passar', 'status', 'move']
   end
 
   def prefixo
@@ -18,6 +18,7 @@ class ModoPartida < Modo
     puts "   * help                                     - Exibe este texto de ajuda"
     puts "   * exit                                     - Encerra o jogo"
     puts "   * passar                                   - Passa a vez"
+    puts "   * status                                   - Mostra informações do jogador e recursos"
     puts "   * move [ID_FONTE], [N_SOLDADOS], [DIRECAO] - Move a quantidade de soldados de um local na direção definida. DIRECAO pode ser {NORTE, SUL, LESTE, OESTE}"
     puts ""
   end
@@ -25,6 +26,14 @@ class ModoPartida < Modo
   def passar
     @jogo.passar_a_vez
     clear()
+  end
+
+  def status
+    puts "Tecnologia atual: #{@jogo.jogador_atual.tecnologia}"
+    puts "Recursos:"
+    @jogo.jogador_atual.cidades.each do |cidade|
+      puts "  cidade##{cidade.id} ~> soldados: +#{cidade.g_exercito} | tecnologia: +#{cidade.g_tecnologia}"
+    end
   end
 
   def move id_fonte, n_soldados, direcao
