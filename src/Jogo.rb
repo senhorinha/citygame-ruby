@@ -66,32 +66,27 @@ class Jogo
   # Movimenta tropa com n_soldados do jogador_atual, a tropa parte do local cujo id é
   # id_fonte e segue na direcao estabelecida um Local de distância
   def movimentar_tropas id_fonte, n_soldados, direcao
-
-    if direcao!=LESTE and direcao!=SUL and direcao!=OESTE and direcao!=NORTE
-      raise DirecaoException, 'Direção não pertence a {LESTE, SUL, OESTE, NORTE}'
+    if(direcao!=LESTE and direcao!=SUL and direcao!=OESTE and direcao!=NORTE)
+      raise DirecaoException, "Direção não pertence a {LESTE, SUL, OESTE, NORTE}"
     end
+      raise NumeroDeExercitosException, "Número de soldados inválido" if n_soldados < 1
 
     for vertice in locais.vertices
-
-      unless vertice.id == id_fonte and vertice.jogador == @jogador_atual
-        raise LocalException, 'Essa cidade não existe ou não lhe pertence'
+      if(vertice.id == id_fonte and vertice.jogador == @jogador_atual)
+        tropa_selecionada = nil
+        for tropa in vertice.tropas
+          tropa_selecionada = tropa if tropa.jogador == @jogador_atual
+        end
+        raise NumeroDeExercitosException, "Número de soldados maior que o existente" if n_soldados > tropa_selecionada.tamanho
+        for sucessor in locais.sucessores(vertice)
+          vertice_destino, d = sucessor.v, sucessor.peso
+          sucesso = tropa_selecionada.movimentar(n_soldados, vertice_destino) if d == direcao
+          return vertice_destino if sucesso
+        end
+        raise DirecaoException, "Não existem locais nesta direção"
       end
-
-      for tropa in vertice.tropas
-        tropa_selecionada = tropa if tropa.jogador == @jogador_atual
-      end
-
-      unless 0 < n_soldados <= tropa_selecionada.tamanho
-        raise NumeroDeExercitosException, 'Número de soldados inválido'
-      end
-
-      for sucessor in locais.sucessores(vertice)
-        vertice_destino, d = sucessor.v, sucessor.peso
-        sucesso = tropa_selecionada.movimentar(n_soldados, vertice_destino) if d == direcao
-        return vertice_destino if sucesso
-      end
-      raise DirecaoException, 'Não existem locais nesta direção'
     end
+    raise LocalException, "Essa cidade não existe ou não lhe pertence"
   end
 
 private
