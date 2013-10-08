@@ -58,13 +58,13 @@ class ModoPartida < Modo
     direcao = @jogo.direcao direcao
 
     begin
-      @jogo.movimentar_tropas id_fonte, n_soldados, direcao
+      destino = @jogo.movimentar_tropas id_fonte, n_soldados, direcao
     rescue CitygameException => e
       error_msg e.to_s
       return
     end
 
-    success_msg "Tropa movida"
+    success_msg "Tropa movida para o local #{destino.id}"
   end
 
 end
