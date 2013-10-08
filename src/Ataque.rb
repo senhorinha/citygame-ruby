@@ -28,8 +28,8 @@ class Ataque
     @forca_do_atacante = @tropa_atacante.forca
     @forca_do_defensor = calcula_forca_de_defesa
 
-    @tropa_atacante.aniquilar calculo_de_perda(@forca_do_defensor)
-    @tropa_defensora.aniquilar calculo_de_perda(@forca_do_atacante)
+    @tropa_atacante.aniquilar (@forca_do_defensor ** 0.5).ceil
+    @tropa_defensora.aniquilar (@forca_do_atacante ** 0.5).ceil
 
     @local.limpar_os_mortos
     return terminou?
@@ -40,19 +40,6 @@ class Ataque
 
   def calcula_forca_de_defesa
   end
-
-  # @param [Fixnum] forca_inimiga
-  # @return [Fixnum] valor inteiro representando o decrescimo na tropa inimiga
-  def calculo_de_perda forca_inimiga
-    if (@forca_do_atacante >= forca_do_defensor)
-      d = @forca_do_atacante - @forca_do_defensor
-    else
-      d = @forca_do_defensor - @forca_do_atacante
-    end
-    #interferência quadrática
-    ((forca_inimiga/d)**2).floor
-  end
-
 
   # @return [FalseClass,TrueClass] retorna true se batalha acabou
   def terminou?
