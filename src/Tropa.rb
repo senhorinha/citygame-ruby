@@ -60,6 +60,10 @@ class Tropa
   def separar n_soldados
     return self if n_soldados == @tamanho
 
+    if n_soldados < 1 || n_soldados > @tamanho then
+      raise NumeroDeExercitosException, "Número de soldados fora do intervalo permitido [1, #{@tamanho}]"
+    end
+
     @tamanho -= n_soldados
     tropa_separada = Tropa.new(@jogador, n_soldados, @local)
     tropa_separada.atualizar_forca

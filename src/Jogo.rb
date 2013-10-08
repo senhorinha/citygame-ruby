@@ -67,15 +67,11 @@ class Jogo
   def movimentar_tropas id_fonte, n_soldados, direcao
     raise DirecaoException, "Direção não pertence a {LESTE, SUL, OESTE, NORTE}" unless @mapa.direcao_valida? direcao
 
-    raise NumeroDeExercitosException, "Número de soldados inválido" if n_soldados < 1
-
     fonte = @mapa.get_local_by_id id_fonte
     raise LocalException, "Este local não existe" if fonte.nil?
 
     tropa = fonte.get_tropa_jogador @jogador_atual
     raise LocalException, "Não existem tropas suas neste local" if tropa.nil?
-
-    raise NumeroDeExercitosException, "Número de soldados maior que o existente" if tropa.tamanho < n_soldados
 
     @mapa.grafo.sucessores(fonte).each do |adj|
       destino = adj.v
