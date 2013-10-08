@@ -37,13 +37,13 @@ class ModoPartida < Modo
       puts "  cidade##{cidade.id} ~> soldados: +#{cidade.g_exercito} | tecnologia: +#{cidade.g_tecnologia}"
     end
   end
-  
+
   def map
     # Imprimir legenda do mapa
     s = "\nLegenda:  "
     s <<= "{}" + " => Cidade   "        # COLORIR "{}" COM A COR DE UMA CIDADE
     s <<= "[]" + " => Campo\n"          # COLORIR "[]" COM A COR DE UM CAMPO
-    
+
     cor_do_jogador = Hash.new :default  # Mapeia cada jogador à sua cor
     indice_para_cor = 1
     for jogador in @jogo.jogadores
@@ -53,7 +53,7 @@ class ModoPartida < Modo
       indice_para_cor = indice_para_cor + 1
     end
     s <<= "\n"
-    
+
     # Imprimir o mapa
     matriz = @jogo.mapa.matriz
     tamanho_dos_locais = 14  # Espaço, em caracteres, ocupado no mapa por cada local
@@ -64,7 +64,7 @@ class ModoPartida < Modo
         # território, será apresentado um X com a sua cor
         # ou o tamanho da tropa caso ele seja o da vez
         for jogador in @jogo.jogadores
-          tropa_local = matriz[i][j].tropas jogador
+          tropa_local = matriz[i][j].get_tropa_jogador jogador
           if tropa_local
           tamanho_dos_locais += 14
             if jogador == @jogo.jogador_atual
