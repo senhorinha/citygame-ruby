@@ -45,7 +45,7 @@ class Local
     end
     return nil # Não há tropas desse jogador no local
   end
-  
+
   # Checa se há tropas inimigas no local. Caso existam, gera as batalhas das tropas, duas a duas
   # @param [Tropa] tropa_atacante : Ultima tropa a entrar na local, responsável por iniciar o ataque
   def checar_batalhas tropa_atacante
@@ -70,7 +70,10 @@ class Local
     tropa_jogador = nil
 
     @tropas.each do |tropa|
-      tropa_jogador = tropa if tropa.jogador == jogador
+      if tropa.jogador == jogador then
+        tropa_jogador = tropa
+        break
+      end
     end
 
     return tropa_jogador
