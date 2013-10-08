@@ -23,18 +23,14 @@ class Tropa
   # Movimenta uma quantidade de soldados da tropa para um novo local adjacente
   # @param [Fixnum] n_soldados Número de soldados a serem movidos
   # @param [Local] local_novo
-  # @return [FalseClass,TrueClass]
   def movimentar n_soldados, local_novo
-
     tropa_em_movimento = separar n_soldados
-
-    return false unless local_novo.ocupar tropa_em_movimento
+    local_novo.ocupar tropa_em_movimento
 
     if tropa_em_movimento == self
       @local.desocupar tropa_em_movimento
       @local = local_novo
     end
-    true
   end
 
   # Concatena a tropa com outra, aumentando o número de soldados da tropa do objeto atual

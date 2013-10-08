@@ -17,28 +17,18 @@ class Local
 
   # Adiciona a tropa ao local atual, concatenando com tropas amigas
   # @param [Tropa] tropa
-  # @return [FalseClass,TrueClass]
   def ocupar tropa
     # Checa se existem tropas amigas no local, se sim, mescla as tropas
     @tropas.each do |outra_tropa|
       if outra_tropa.jogador == tropa.jogador
         outra_tropa.concatenar(tropa)
         checar_batalhas outra_tropa
-        return true
+        return
       end
     end
 
-    # Checa se existem vaga para uma nova tropa (inimiga)
-    for i in 0..1
-      if @tropas[i].nil?
-        @tropas[i] = tropa
-        checar_batalhas tropa
-        return true
-      end
-    end
-
-    return false # Não há espaço nesse Local
-
+    @tropas.push tropa
+    checar_batalhas tropa
   end
 
   # Retira a tropa do local atual
