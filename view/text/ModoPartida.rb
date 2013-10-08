@@ -59,7 +59,6 @@ class ModoPartida < Modo
     tamanho_dos_locais = 14  # Espaço, em caracteres, ocupado no mapa por cada local
     for i in 0...matriz.size
       for j in 0...matriz[0].size
-        tamanho_dos_locais = 14
         local = "%02d" % matriz[i][j].id
         # Para cada jogador que controlar uma tropa neste
         # território, será apresentado um X com a sua cor
@@ -82,6 +81,7 @@ class ModoPartida < Modo
           local = (local << "]").prepend "["  # Campos são representados com []
         end
         s <<= local.center(tamanho_dos_locais, '-')
+        tamanho_dos_locais = 14
       end
       s <<= "\n"
       # Duvido você compreender a próxima linha!
