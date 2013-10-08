@@ -31,8 +31,8 @@ class Ataque
     @forca_do_atacante = @tropa_atacante.forca
     @forca_do_defensor = calcula_forca_de_defesa
 
-    @tropa_atacante.atualizar_valores_pos_batalha calculo_de_perda @tropa_defensora
-    @tropa_defensora.atualizar_valores_pos_batalha calculo_de_perda @tropa_atacante
+    @tropa_atacante.atualizar_valores_pos_batalha calculo_de_perda(@forca_do_defensor)
+    @tropa_defensora.atualizar_valores_pos_batalha calculo_de_perda(@forca_do_atacante)
 
     @local.limpar_os_mortos
     return terminou?
