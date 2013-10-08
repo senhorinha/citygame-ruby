@@ -31,36 +31,29 @@ class Ataque
     @forca_do_atacante = @tropa_atacante.forca
     @forca_do_defensor = calcula_forca_de_defesa
 
-    if @forca_do_atacante > @forca_do_defensor
-      @tropa_atacante.atualizar_valores_pos_batalha caso_um
-      @tropa_defensora.atualizar_valores_pos_batalha caso_dois
-    else
-      @tropa_atacante.atualizar_valores_pos_batalha caso_dois
-      @tropa_defensora.atualizar_valores_pos_batalha caso_um
-    end
+    @tropa_atacante.atualizar_valores_pos_batalha calculo_de_perda @tropa_defensora
+    @tropa_defensora.atualizar_valores_pos_batalha calculo_de_perda @tropa_atacante
 
     @local.limpar_os_mortos
     return terminou?
   end
+
 
   private
 
   def calcula_forca_de_defesa
   end
 
-  # @return [Fixnum]
-  def funcao_cerco
-    Math.sqrt((@forca_do_atacante*@forca_do_defensor)/10*(@forca_do_atacante+@forca_do_defensor))
-  end
-
-  #caso_um   : Se a força da tropa de ataque for maior que a força da tropa de defesa
-  def caso_um
-    ((@forca_do_atacante/@forca_do_defensor)**PHI)*(1/funcao_cerco)
-  end
-
-  #caso_dois : Se a força da tropa de defesa for maior que a força da tropa de ataque
-  def caso_dois
-    1/funcao_cerco
+  # @param [Fixnum] forca_inimiga
+  # @return [Fixnum] valor inteiro representando o decrescimo na tropa inimiga
+  def calculo_de_perda forca_inimiga
+    if (@forca_do_atacante >= forca_do_defensor)
+      d = @forca_do_atacante - @forca_do_defensor
+    else
+      d = @forca_do_defensor - @forca_do_atacante
+    end
+    #interferência quadrática
+    ((forca_inimiga/d)**2).floor
   end
 
 
