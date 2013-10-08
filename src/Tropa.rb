@@ -52,7 +52,7 @@ class Tropa
   # Atualiza tamanho da tropa e valor de ataque
   # @param [Fixnum] resultado
   def atualizar_valores_pos_batalha resultado
-    @tamanho *= resultado
+    @tamanho -= resultado
     atualizar_forca
   end
 
