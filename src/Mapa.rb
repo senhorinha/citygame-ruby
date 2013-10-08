@@ -113,4 +113,20 @@ class Mapa
     jogador.atribuir_cidade rand_city
   end
 
+  # Retorna o local com id igual ao parâmetro ou nil caso não exista
+  # @param [Integer]
+  # @return [Local]
+  def get_local_by_id id
+    local_do_id = nil
+
+    @grafo.vertices.each do |local|
+      if local.id == id then
+        local_do_id = local
+        break
+      end
+    end
+
+    return local_do_id
+  end
+
 end
