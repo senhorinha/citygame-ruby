@@ -43,10 +43,11 @@ class Tropa
     return self
   end
 
-  # Atualiza tamanho da tropa e valor de ataque
-  # @param [Fixnum] resultado
-  def atualizar_valores_pos_batalha resultado
-    @tamanho -= resultado
+  # Reduz o número de soldados na tropa.
+  # @param [Integer] n_soldados: Número de soldados a serem reduzidos da tropa atual
+  def aniquilar n_soldados
+    @tamanho -= n_soldados
+    @tamanho = 0 if @tamanho < 1
   end
 
   private
