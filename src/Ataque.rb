@@ -25,9 +25,6 @@ class Ataque
 
   # @return [FalseClass, TrueClass] Executa batalha e retorna false se nenhuma tropa foi derrotada.
   def executar
-    @tropa_atacante.atualizar_forca
-    @tropa_defensora.atualizar_forca
-
     @forca_do_atacante = @tropa_atacante.forca
     @forca_do_defensor = calcula_forca_de_defesa
 

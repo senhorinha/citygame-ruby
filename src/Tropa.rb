@@ -4,7 +4,7 @@ require_relative 'Local'
 require_relative 'Jogador'
 
 class Tropa
-  attr_reader :tamanho, :jogador, :forca
+  attr_reader :tamanho, :jogador
   attr_accessor :local
 
   # @param [Jogador] jogador
@@ -16,8 +16,8 @@ class Tropa
     @tamanho = tamanho
   end
 
-  def atualizar_forca
-    @forca = @jogador.tecnologia * @tamanho
+  def forca
+    return @jogador.tecnologia * @tamanho
   end
 
   # Movimenta uma quantidade de soldados da tropa para um novo local adjacente
@@ -40,7 +40,6 @@ class Tropa
     raise ArgumentError, 'Não é possível concatenar tropas de diferentes jogadores' unless @jogador.eql? tropa.jogador
 
     @tamanho += tropa.tamanho
-    atualizar_forca
     return self
   end
 
@@ -48,7 +47,6 @@ class Tropa
   # @param [Fixnum] resultado
   def atualizar_valores_pos_batalha resultado
     @tamanho -= resultado
-    atualizar_forca
   end
 
   private
@@ -65,8 +63,6 @@ class Tropa
 
     @tamanho -= n_soldados
     tropa_separada = Tropa.new(@jogador, n_soldados, @local)
-    tropa_separada.atualizar_forca
-    self.atualizar_forca
     return tropa_separada
   end
 
