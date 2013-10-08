@@ -69,22 +69,24 @@ class Jogo
 
     raise NumeroDeExercitosException, "Número de soldados inválido" if n_soldados < 1
 
-    for vertice in @mapa.grafo.vertices
-      if(vertice.id == id_fonte and vertice.jogador == @jogador_atual)
-        tropa_selecionada = nil
-        for tropa in vertice.tropas
-          tropa_selecionada = tropa if tropa.jogador == @jogador_atual
-        end
-        raise NumeroDeExercitosException, "Número de soldados maior que o existente" if tropa_selecionada.nil? or n_soldados > tropa_selecionada.tamanho
-        for sucessor in @mapa.grafo.sucessores(vertice)
-          vertice_destino, d = sucessor.v, sucessor.peso
-          sucesso = tropa_selecionada.movimentar(n_soldados, vertice_destino) if d == direcao
-          return vertice_destino if sucesso
-        end
-        raise DirecaoException, "Não existem locais nesta direção"
+    fonte = @mapa.get_local_by_id id_fonte
+    raise LocalException, "Este local não existe" if fonte.nil?
+
+    tropa = fonte.get_tropa_jogador @jogador_atual
+    raise LocalException, "Não existem tropas suas neste local" if tropa.nil?
+
+    raise NumeroDeExercitosException, "Número de soldados maior que o existente" if tropa.tamanho < n_soldados
+
+    @mapa.grafo.sucessores(fonte).each do |adj|
+      destino = adj.v
+      d = adj.peso
+      if d == direcao then
+        tropa.movimentar(n_soldados, destino)
+        return destino
       end
     end
-    raise LocalException, "Essa cidade não existe ou não lhe pertence"
+
+    raise DirecaoException, "Não existem locais nesta direção"
   end
 
   # Recebe uma string {NORTE, SUL, LESTE, OESTE} e retorna um inteiro que representa a direção informada
