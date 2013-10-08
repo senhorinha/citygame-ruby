@@ -59,6 +59,7 @@ class ModoPartida < Modo
     tamanho_dos_locais = 14  # Espaço, em caracteres, ocupado no mapa por cada local
     for i in 0...matriz.size
       for j in 0...matriz[0].size
+        tamanho_dos_locais = 14
         local = "%02d" % matriz[i][j].id
         # Para cada jogador que controlar uma tropa neste
         # território, será apresentado um X com a sua cor
@@ -66,6 +67,7 @@ class ModoPartida < Modo
         for jogador in @jogo.jogadores
           tropa_local = matriz[i][j].tropas jogador
           if tropa_local
+          tamanho_dos_locais += 14
             if jogador == @jogo.jogador_atual
               tamanho = tropa_local.tamanho.to_s
               local <<= ", " + tamanho.colorize(cor_do_jogador[jogador])
