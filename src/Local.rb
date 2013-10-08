@@ -37,12 +37,13 @@ class Local
     @tropas.delete tropa
   end
 
-  # Checa se há tropas do jogador no local
-  def tropas? jogador
+  # Retorna as tropas do jogador no local
+  # @param [Jogador] jogador
+  def tropas jogador
     for tropa in @tropas
-      return true if tropa.jogador == jogador
+      return tropa if tropa.jogador == jogador
     end
-    return false # Não há tropas desse jogador no local
+    return nil # Não há tropas desse jogador no local
   end
   
   # Checa se há tropas inimigas no local. Caso existam, gera as batalhas das tropas, duas a duas
