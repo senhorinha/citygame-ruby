@@ -4,8 +4,8 @@ require_relative 'Local'
 require_relative 'Jogador'
 
 class Tropa
-
-  attr_reader :local, :tamanho, :jogador, :forca
+  attr_reader :tamanho, :jogador, :forca
+  attr_accessor :local
 
   # @param [Jogador] jogador
   # @param [Fixnum] tamanho
@@ -29,8 +29,9 @@ class Tropa
 
     if tropa_em_movimento == self
       @local.desocupar tropa_em_movimento
-      @local = local_novo
     end
+
+    tropa_em_movimento.local = local_novo
   end
 
   # Concatena a tropa com outra, aumentando o número de soldados da tropa do objeto atual
