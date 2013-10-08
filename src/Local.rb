@@ -64,4 +64,17 @@ class Local
     end
   end
 
+  # Retorna a tropa do jogador presente no local, ou nil se não existem tropas do jogador no local
+  # @param [Jogador]
+  # @return [Tropa]
+  def get_tropa_jogador jogador
+    tropa_jogador = nil
+
+    @tropas.each do |tropa|
+      tropa_jogador = tropa if tropa.jogador == jogador
+    end
+
+    return tropa_jogador
+  end
+
 end
