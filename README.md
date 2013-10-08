@@ -1,13 +1,14 @@
 # citygame-ruby
 
-citygame-ruby
+Jogo de estratégia baseado em turnos.
 
 ### Rodando o jogo
 
 Utilize `ruby view/text/init.rb` para rodar o jogo em modo texto.
 
-### Instalando dependências
+### Dependências
 
-Bundler é necessário para a resolução de dependências.
+* Ruby >= 1.9
+* [colorize](https://github.com/fazibear/colorize)
 
-Rode `bundle install` para instalar as Gems requeridas.
+[Bundler](http://bundler.io/) pode ser utilizado para a resolução de dependências: `bundle install`.
