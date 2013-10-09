@@ -12,7 +12,7 @@ class Mapa
   OESTE = 9
   NORTE = 12
   QUANTIDADE_DE_CIDADES = 5
-  QUANTIDADE_DE_CAMPOS = 44
+  QUANTIDADE_DE_CAMPOS = 31
 
   # Cria um novo mapa aleatório
   def initialize
