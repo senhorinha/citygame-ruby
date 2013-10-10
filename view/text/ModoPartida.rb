@@ -10,7 +10,10 @@ class ModoPartida < Modo
   end
 
   def prefixo
-    return "turno#{@jogo.turno} @ #{@jogo.jogador_atual.nome} ~> "
+    s = "turno#{@jogo.turno} @ "
+    s <<= "#{@jogo.jogador_atual.nome}".colorize cor_jogador(@jogo.jogador_atual)
+    s <<= ' ~> '
+    return s
   end
 
   def help
@@ -44,13 +47,9 @@ class ModoPartida < Modo
     s <<= "{}" + " => Cidade   "        # COLORIR "{}" COM A COR DE UMA CIDADE
     s <<= "[]" + " => Campo\n"          # COLORIR "[]" COM A COR DE UM CAMPO
 
-    cor_do_jogador = Hash.new :default  # Mapeia cada jogador à sua cor
-    indice_para_cor = 1
     for jogador in @jogo.jogadores
-      cor_do_jogador[jogador] = String.colors[indice_para_cor]
       nome_do_jogador = "%-8s" % jogador.nome
-      s <<= "          #{nome_do_jogador} => " + "X".colorize(cor_do_jogador[jogador]) + "\n"
-      indice_para_cor = indice_para_cor + 1
+      s <<= "          #{nome_do_jogador} => " + "X".colorize(cor_jogador(jogador)) + "\n"
     end
     s <<= "\n"
 
@@ -69,9 +68,9 @@ class ModoPartida < Modo
           tamanho_dos_locais += 14
             if jogador == @jogo.jogador_atual
               tamanho = tropa_local.tamanho.to_s
-              local <<= ", " + tamanho.colorize(cor_do_jogador[jogador])
+              local <<= ", " + tamanho.colorize(cor_jogador(jogador))
             else
-              local <<= ", " + "X".colorize(cor_do_jogador[jogador])
+              local <<= ", " + "X".colorize(cor_jogador(jogador))
             end
           end
         end
@@ -121,6 +120,12 @@ class ModoPartida < Modo
     end
 
     success_msg "Tropa movida para o local #{destino.id}"
+  end
+
+  # Retorna a cor do jogador passado
+  # @return [int] Inteiro que representa uma cor
+  def cor_jogador jogador
+    return String.colors[jogador.id + 1]
   end
 
 end
