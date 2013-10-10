@@ -54,12 +54,12 @@ class Mapa
     raise LocalException, 'Não existem locais suficientes para iniciar o jogo' if (n_loc**(0.5))%(n_loc**(0.5)).floor != 0
     loc = Array.new(n_loc)
     for i in 0...QUANTIDADE_DE_CIDADES
-      loc[i] = Cidade.new(i,true)
+      loc[i] = Cidade.new(i)
       @cidades.push loc[i]
     end
     for i in 0...QUANTIDADE_DE_CAMPOS
       j = (QUANTIDADE_DE_CIDADES + i)
-      loc[j] = Local.new(j,false)
+      loc[j] = Local.new(j)
       @campos.push loc[j]
     end
 

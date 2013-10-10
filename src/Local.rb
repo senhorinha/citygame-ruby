@@ -5,14 +5,16 @@ require_relative 'Jogador'
 
 class Local
 
-  attr_reader :id, :tropas, :is_cidade
+  attr_reader :id, :tropas
 
   # @param [Fixnum] id identificador do Local
-  # @param [FalseClass,TrueClass] is_cidade true se local for cidade
-  def initialize id, is_cidade
+  def initialize id
     @id = id
     @tropas = []
-    @is_cidade = is_cidade
+  end
+
+  def is_cidade
+    return false
   end
 
   # Adiciona a tropa ao local atual, concatenando com tropas amigas

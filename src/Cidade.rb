@@ -13,12 +13,16 @@ class Cidade < Local
   STATUS_SOB_ATAQUE = 2
   STATUS_SOB_CERCO  = 3
 
-  def initialize id, is_cidade
-    super id,is_cidade
+  def initialize id
+    super id
     @g_exercito = 10
     @g_tecnologia = 0
     @jogador = nil
     @status = STATUS_PROTEGIDA
+  end
+
+  def is_cidade
+    return true
   end
 
   # Balanceia os recursos gerados pela cidade
