@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 
 require_relative 'exceptions'
-require_relative 'Digrafo'
+require_relative 'simple-graph/src/Digrafo'
 
 class Mapa
   attr_reader :campos, :cidades, :matriz, :grafo
