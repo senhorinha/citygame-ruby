@@ -34,12 +34,13 @@ class Tropa
     tropa_em_movimento.local = local_novo
   end
 
-  # Concatena a tropa com outra, aumentando o número de soldados da tropa do objeto atual
+  # Concatena a tropa com outra, aumentando o número de soldados da tropa do objeto atual e reduzindo a 0 o tamanho da tropa parâmetro
   # @param [Tropa] tropa
   def concatenar tropa
     raise ArgumentError, 'Não é possível concatenar tropas de diferentes jogadores' unless @jogador.eql? tropa.jogador
 
     @tamanho += tropa.tamanho
+    tropa.tamanho = 0
     return self
   end
 
@@ -50,7 +51,13 @@ class Tropa
     @tamanho = 0 if @tamanho < 1
   end
 
-  private
+protected
+
+  def tamanho=(n)
+    @tamanho = n
+  end
+
+private
 
   # Retorna um novo objeto Tropa com o tamanho estipulado. Caso o tamanho de separação seja igual ao tamanho da tropa, a própria tropa é retornada
   # @param [Fixnum] n_soldados representa a quantidade de soldados que serão separados da tropa inicial
