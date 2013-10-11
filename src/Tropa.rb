@@ -11,9 +11,9 @@ class Tropa
   # @param [Fixnum] tamanho
   # @param [Local] local
   def initialize jogador, tamanho, local
-    @local = local
     @jogador = jogador
     @tamanho = tamanho
+    ocupar_local local
   end
 
   def forca
@@ -25,13 +25,7 @@ class Tropa
   # @param [Local] local_novo
   def movimentar n_soldados, local_novo
     tropa_em_movimento = separar n_soldados
-    local_novo.ocupar tropa_em_movimento
-
-    if tropa_em_movimento == self
-      @local.desocupar tropa_em_movimento
-    end
-
-    tropa_em_movimento.local = local_novo
+    tropa_em_movimento.ocupar_local local_novo
   end
 
   # Concatena a tropa com outra, aumentando o número de soldados da tropa do objeto atual e reduzindo a 0 o tamanho da tropa parâmetro
@@ -49,6 +43,22 @@ class Tropa
   def aniquilar n_soldados
     @tamanho -= n_soldados
     @tamanho = 0 if @tamanho < 1
+  end
+
+  # Faz a tropa ocupar um novo local
+  # @param [Local] local: novo local a ser ocupado
+  def ocupar_local local
+    # Caso esteja tentando ocupar o mesmo local, pára
+    return if @local == local
+
+    # Sai do local atual:
+    @local.desocupar self unless @local.nil?
+
+    # Cria a referência para o novo local
+    @local = local
+
+    # Ocupa o novo local
+    @local.ocupar self unless @local.nil?
   end
 
 protected
@@ -70,7 +80,7 @@ private
     end
 
     @tamanho -= n_soldados
-    tropa_separada = Tropa.new(@jogador, n_soldados, @local)
+    tropa_separada = Tropa.new(@jogador, n_soldados, nil)
     return tropa_separada
   end
 

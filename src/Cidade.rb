@@ -38,7 +38,6 @@ class Cidade < Local
   def gerar_exercitos
     if @status != STATUS_SOB_CERCO && @jogador != nil
       nova_tropa = Tropa.new(@jogador, @g_exercito, self)
-      ocupar nova_tropa
     end
   end
 
