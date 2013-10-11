@@ -16,8 +16,8 @@ class AtConquista < Atividade
   end
 
   def executar turno_atual
-    if @tropa.nil? or @tropa.tamanho < 1 or @tropa.local != @cidade then
-      # Cancela a conquista se a tropa não existe OU não está mais na cidade
+    if @tropa.nil? or @tropa.tamanho < 1 or @tropa.local != @cidade or @cidade.jogador == @tropa.jogador then
+      # Cancela a conquista se a tropa não existe OU não está mais na cidade OU a cidade já pertence ao jogador
       return true
     end
 

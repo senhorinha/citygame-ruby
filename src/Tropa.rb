@@ -2,6 +2,7 @@
 
 require_relative 'Local'
 require_relative 'Jogador'
+require_relative 'atividades/AtConquista'
 
 class Tropa
   attr_reader :tamanho, :jogador
@@ -59,6 +60,11 @@ class Tropa
 
     # Ocupa o novo local
     @local.ocupar self unless @local.nil?
+
+    # Começa uma conquista se o local é uma cidade
+    if !@local.nil? and @local.is_cidade and @local.jogador != @jogador
+      @jogador.adicionar_atividade AtConquista.new(self, @local)
+    end
   end
 
 protected
