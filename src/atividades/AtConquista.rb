@@ -5,6 +5,8 @@ require_relative 'Atividade'
 # Atividade conquista
 # A atividade é criada no momento de ocupação de uma tropa em uma cidade abandonada. Após N turnos, a cidade é considerada conquistada e passa a ser uma colônia do jogador que possui a tropa
 class AtConquista < Atividade
+  attr_reader :turnos_restantes
+
   TURNOS_CONQUISTA = 3 # Número de turnos necessários para a tropa conquistar a cidade
 
   def initialize tropa, cidade
