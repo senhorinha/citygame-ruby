@@ -2,6 +2,8 @@
 
 require_relative 'Tropa'
 require_relative 'Jogador'
+require_relative 'atividades/AtAtaqueRural'
+require_relative 'atividades/AtAtaqueUrbano'
 
 class Local
 
@@ -44,7 +46,11 @@ class Local
   def checar_batalhas tropa_atacante
     @tropas.each do |tropa|
       if !tropa.nil? and tropa != tropa_atacante
-        tropa_atacante.jogador.adicionar_ataque self, tropa_atacante, tropa
+        if is_cidade then
+          tropa_atacante.jogador.adicionar_atividade AtAtaqueUrbano.new(self, tropa_atacante, tropa)
+        else
+          tropa_atacante.jogador.adicionar_atividade AtAtaqueRural.new(self, tropa_atacante, tropa)
+        end
       end
     end
   end

@@ -1,12 +1,10 @@
 # -*- encoding : utf-8 -*-
 
-require_relative 'Ataque'
-require_relative 'Local'
-require_relative 'Tropa'
+require_relative 'AtAtaque'
 
-# Ataque na cidade, ou seja, urbano
+# Ataque no campo, ou seja, rural.
 # Design Pattern: Template
-class AtaqueUrbano < Ataque
+class AtAtaqueRural < AtAtaque
 
 
   # @param [Local] local onde esta sendo realizada a batalha
@@ -16,9 +14,9 @@ class AtaqueUrbano < Ataque
     super local, tropa_atacante, tropa_defensora
   end
 
-  # Tropa que defende na cidade recebe um adicional de 10*tecnologia
+  #Tropa de defesa não recebe adicional de força em area rural
   def calcula_forca_de_defesa
-    @tropa_defensora.jogador.tecnologia*10 + @tropa_defensora.forca
+    @tropa_defensora.forca
   end
 
 end

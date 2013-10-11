@@ -1,10 +1,11 @@
 # -*- encoding : utf-8 -*-
 
-require_relative 'Local'
-require_relative 'Tropa'
+require_relative 'Atividade'
+require_relative '../Local'
+require_relative '../Tropa'
 
 # Classe abstract para uso do design pattern Template.
-class Ataque
+class AtAtaque < Atividade
 
   attr_reader :local
   attr_reader :tropa_atacante, :tropa_defensora
@@ -24,7 +25,7 @@ class Ataque
   end
 
   # @return [FalseClass, TrueClass] Executa batalha e retorna false se nenhuma tropa foi derrotada.
-  def executar
+  def executar turno_atual
     @forca_do_atacante = @tropa_atacante.forca
     @forca_do_defensor = calcula_forca_de_defesa
 

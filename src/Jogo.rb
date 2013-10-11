@@ -42,7 +42,6 @@ class Jogo
   # Passa a vez para o próximo jogador
   def passar_a_vez
     @jogador_atual.gerar_recursos()
-    @jogador_atual.executar_ataques()
     @jogador_atual.executar_atividades(@turno)
 
     id_jogador_atual = @jogador_atual.id
