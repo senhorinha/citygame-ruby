@@ -6,6 +6,7 @@ class Jogador
   attr_reader :id, :nome
   attr_reader :cidades
   attr_reader :fila_de_ataques
+  attr_reader :fila_de_atividades
   attr_accessor :tecnologia
 
   def initialize id, nome
@@ -14,6 +15,7 @@ class Jogador
     @tecnologia = 1
     @cidades = []
     @fila_de_ataques = FilaDeAtaques.new
+    @fila_de_atividades = []
   end
 
   def gerar_recursos
@@ -46,6 +48,21 @@ class Jogador
     cidade.jogador = self
     @cidades.push cidade
     return true
+  end
+
+  # Adiciona uma nova atividade à fila do jogador
+  # @param [Atividade]
+  def adicionar_atividade atividade
+    @fila_de_atividades.push atividade
+  end
+
+  # Executa todas as atividades da fila do jogador e exclui da fila as atividades terminadas
+  def executar_atividades turno_atual
+    @fila_de_atividades.each do |atividade|
+      if atividade.executar(turno_atual)
+        @fila_de_atividades.delete atividade
+      end
+    end
   end
 
 end
