@@ -25,7 +25,7 @@ class AtConquistaTest < Test::Unit::TestCase
     end
 
     assert @jogador.cidades.include?(@cidade)
-    assert @cidade.jogador == @jogador
+    assert_equal @jogador, @cidade.jogador
   end
 
   def testar_se_conquista_eh_cancelada_ao_mover_a_tropa
@@ -33,7 +33,7 @@ class AtConquistaTest < Test::Unit::TestCase
     novo_local = Local.new 2
     @tropa.movimentar @tropa.tamanho, novo_local
     assert @at.executar(2)
-    assert @cidade.jogador != @jogador
+    assert_not_equal @jogador, @cidade.jogador
   end
 
   def testar_se_conquista_eh_postergada_em_batalha
@@ -42,14 +42,14 @@ class AtConquistaTest < Test::Unit::TestCase
     turnos_restantes_anterior = @at.turnos_restantes
     @at.executar(1)
     turnos_restantes_posterior = @at.turnos_restantes
-    assert turnos_restantes_anterior == turnos_restantes_posterior
+    assert_equal turnos_restantes_anterior, turnos_restantes_posterior
 
     # Retirar exército inimigo
     tropa_inimiga.ocupar_local nil
 
     @at.executar(2)
     turnos_restantes_posterior = @at.turnos_restantes
-    assert turnos_restantes_posterior == turnos_restantes_anterior - 1
+    assert_equal turnos_restantes_anterior - 1, turnos_restantes_posterior
   end
 
 end

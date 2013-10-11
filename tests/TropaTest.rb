@@ -21,9 +21,9 @@ class TropaTest < Test::Unit::TestCase
   def testar_ocupacao_da_tropa_no_momento_de_criacao
     nova_cidade = Cidade.new 3
     tropa = Tropa.new @jogador, 3, nova_cidade
-    assert tropa.local == nova_cidade
-    assert nova_cidade.tropas.size == 1
-    assert nova_cidade.tropas[0] == tropa
+    assert_equal nova_cidade, tropa.local
+    assert_equal 1, nova_cidade.tropas.size
+    assert_equal tropa, nova_cidade.tropas[0]
   end
 
   def testar_forca
@@ -35,7 +35,7 @@ class TropaTest < Test::Unit::TestCase
 
     assert !@cidade.tropas.include?(@tropa) # Deve ter saído da cidade de origem
     assert @local2.tropas.include?(@tropa) # Deve ter chegado na cidade de destino
-    assert @tropa.local == @local2
+    assert_equal @local2, @tropa.local
   end
 
   def testar_movimentar_tropas_inexistentes
@@ -43,13 +43,13 @@ class TropaTest < Test::Unit::TestCase
       @tropa.movimentar 20000, @local2
     end
 
-    assert @tropa.local == @cidade
+    assert_equal @cidade, @tropa.local
   end
 
   def testar_movimentar_parte_da_tropa
     @tropa.movimentar 2, @local2
-    assert @local2.tropas[0].tamanho == 2
-    assert @cidade.tropas[0].tamanho == 8
+    assert_equal 2, @local2.tropas[0].tamanho
+    assert_equal 8, @cidade.tropas[0].tamanho
   end
 
   def testar_concatenar_tropas_de_diferentes_jogadores
@@ -61,24 +61,24 @@ class TropaTest < Test::Unit::TestCase
   def testar_concatenar_tropas
     tropa2 = Tropa.new @jogador, 4, @cidade
     @tropa.concatenar tropa2
-    assert @tropa.tamanho == 14
-    assert tropa2.tamanho == 0
+    assert_equal 14, @tropa.tamanho
+    assert_equal 0, tropa2.tamanho
   end
 
   def testar_aniquilar
     @tropa.aniquilar 2
-    assert @tropa.tamanho == 8
+    assert_equal 8, @tropa.tamanho
     @tropa.aniquilar 100
-    assert @tropa.tamanho == 0
+    assert_equal 0, @tropa.tamanho
   end
 
   def testar_concatenar_tropas_ao_mover
     tropa2 = Tropa.new @jogador, 7, nil
     tropa2.movimentar 3, @cidade
-    assert @tropa.tamanho == 13 # Deve ter concatenado com @tropa
+    assert_equal 13, @tropa.tamanho # Deve ter concatenado com @tropa
     tropa2.movimentar 4, @cidade
-    assert @tropa.tamanho == 17 # Deve ter concatenado com @tropa
-    assert tropa2.tamanho == 0 # Tropa original deve ter sido 'diluída'
+    assert_equal 17, @tropa.tamanho # Deve ter concatenado com @tropa
+    assert_equal 0, tropa2.tamanho # Tropa original deve ter sido 'diluída'
   end
 
 end
