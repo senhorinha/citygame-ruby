@@ -41,20 +41,6 @@ class Local
     @tropas.delete tropa
   end
 
-  # Checa se há tropas inimigas no local. Caso existam, gera as batalhas das tropas, duas a duas
-  # @param [Tropa] tropa_atacante : Ultima tropa a entrar na local, responsável por iniciar o ataque
-  def checar_batalhas tropa_atacante
-    @tropas.each do |tropa|
-      if !tropa.nil? and tropa != tropa_atacante
-        if is_cidade then
-          tropa_atacante.jogador.adicionar_atividade AtAtaqueUrbano.new(self, tropa_atacante, tropa)
-        else
-          tropa_atacante.jogador.adicionar_atividade AtAtaqueRural.new(self, tropa_atacante, tropa)
-        end
-      end
-    end
-  end
-
   # Elimina as tropas nulas ou de tamanho 0 do local
   def limpar_os_mortos
     @tropas.each do |tropa|
@@ -76,6 +62,22 @@ class Local
     end
 
     return tropa_jogador
+  end
+
+protected
+
+  # Checa se há tropas inimigas no local. Caso existam, gera as batalhas das tropas, duas a duas
+  # @param [Tropa] tropa_atacante : Ultima tropa a entrar na local, responsável por iniciar o ataque
+  def checar_batalhas tropa_atacante
+    @tropas.each do |tropa|
+      if !tropa.nil? and tropa != tropa_atacante
+        if is_cidade then
+          tropa_atacante.jogador.adicionar_atividade AtAtaqueUrbano.new(self, tropa_atacante, tropa)
+        else
+          tropa_atacante.jogador.adicionar_atividade AtAtaqueRural.new(self, tropa_atacante, tropa)
+        end
+      end
+    end
   end
 
 end
