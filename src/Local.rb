@@ -23,16 +23,14 @@ class Local
   # @param [Tropa] tropa
   def ocupar tropa
     # Checa se existem tropas amigas no local, se sim, mescla as tropas
-    @tropas.each do |outra_tropa|
-      if outra_tropa.jogador == tropa.jogador
-        outra_tropa.concatenar(tropa)
-        checar_batalhas outra_tropa
-        return
-      end
-    end
+    concatenada = checar_concatenacao tropa
 
-    @tropas.push tropa
-    checar_batalhas tropa
+    if concatenada.nil? then
+      @tropas.push tropa
+      checar_batalhas tropa
+    else
+      checar_batalhas concatenada
+    end
   end
 
   # Retira a tropa do local atual
@@ -65,6 +63,20 @@ class Local
   end
 
 protected
+
+  # Checa se a nova tropa pode ser concatenada com alguma tropa amiga presente no local
+  # @param [Tropa] tropa_a_concatenar : Nova tropa a ser concatenada
+  # @return [Tropa] Retorna a tropa na qual a nova tropa foi concatenada ou nil se não houve concatenação
+  def checar_concatenacao tropa_a_concatenar
+    @tropas.each do |outra_tropa|
+      if outra_tropa.jogador == tropa_a_concatenar.jogador and outra_tropa != tropa_a_concatenar
+        outra_tropa.concatenar(tropa_a_concatenar)
+        return outra_tropa
+      end
+    end
+
+    return nil
+  end
 
   # Checa se há tropas inimigas no local. Caso existam, gera as batalhas das tropas, duas a duas
   # @param [Tropa] tropa_atacante : Ultima tropa a entrar na local, responsável por iniciar o ataque
