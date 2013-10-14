@@ -1,5 +1,6 @@
 require_relative 'TropaTest.rb'
 require_relative 'JogadorTest.rb'
+require_relative 'LocalTest.rb'
 
 # Testes das atividades
 require_relative 'atividadesTests/AtConquistaTest.rb'
