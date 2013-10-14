@@ -41,8 +41,11 @@ class Cidade < Local
     end
   end
 
+  # Retorna a taxa de tecnologia gerada pela cidade
+  # @return [Numeric]
   def taxa_tecnologia
-    @g_tecnologia if @status != STATUS_SOB_CERCO && @jogador != nil
+    return @g_tecnologia if @status != STATUS_SOB_CERCO && @jogador != nil
+    return 0
   end
 
   # Retorna verdadeiro se nenhum jogador está em posse da cidade
