@@ -18,7 +18,7 @@ class CidadeTest < Test::Unit::TestCase
 
   def testar_balancear_recursos
     @cidade.balancear_recursos 3, 7
-    assert_equal 3, @cidade.g_exercito
+    assert_equal 3, @cidade.g_tropas
     assert_equal 7, @cidade.g_tecnologia
   end
 
@@ -34,9 +34,9 @@ class CidadeTest < Test::Unit::TestCase
     assert_equal 6, @cidade.taxa_tecnologia
   end
 
-  def testar_gerar_exercitos
+  def testar_gerar_tropas
     @cidade.balancear_recursos 9, 1
-    @cidade.gerar_exercitos
+    @cidade.gerar_tropas
 
     assert_equal 1, @cidade.tropas.size
     assert_equal 9, @cidade.tropas[0].tamanho

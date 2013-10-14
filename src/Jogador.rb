@@ -17,7 +17,7 @@ class Jogador
   def gerar_recursos
     tec = 0
     @cidades.each do |cidade|
-      cidade.gerar_exercitos()
+      cidade.gerar_tropas()
       tec += cidade.taxa_tecnologia()
     end
     tec /= 100.0

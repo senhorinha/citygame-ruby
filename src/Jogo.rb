@@ -51,10 +51,10 @@ class Jogo
     @turno += 1
   end
 
-  def balancear_recursos id_cidade, exercitos, tecnologia
+  def balancear_recursos id_cidade, tropas, tecnologia
     @jogador_atual.cidades.each do |cidade|
       if cidade.id == id_cidade
-        cidade.balancear_recursos exercitos, tecnologia
+        cidade.balancear_recursos tropas, tecnologia
         return
       end
     end

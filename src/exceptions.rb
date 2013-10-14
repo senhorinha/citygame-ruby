@@ -15,8 +15,8 @@ class MinimoDeJogadoresException < CitygameException; end
 # Exception lançada quando houver tentativa de criar novos jogadores no meio de uma partida!
 class NovoJogadorException  < CitygameException; end
 
-# Exception lançada quando número de exércitos está fora do intervalo [minimo, maximo] número de exércitos da tropa.
-class NumeroDeExercitosException < CitygameException; end
+# Exception lançada quando número de tropas está fora do intervalo [minimo, maximo]
+class NumeroDeTropasException < CitygameException; end
 
-# Exception lançada quando a soma dos exercitos e tecnologia for maior que 10.
+# Exception lançada quando a soma das tropas e tecnologia for maior que 10.
 class SomaDeRecursosException < CitygameException; end

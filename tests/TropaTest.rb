@@ -39,7 +39,7 @@ class TropaTest < Test::Unit::TestCase
   end
 
   def testar_movimentar_tropas_inexistentes
-    assert_raise NumeroDeExercitosException do
+    assert_raise NumeroDeTropasException do
       @tropa.movimentar 20000, @local2
     end
 
