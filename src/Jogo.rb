@@ -73,16 +73,11 @@ class Jogo
     tropa = fonte.get_tropa_jogador @jogador_atual
     raise LocalException, "Não existem tropas suas neste local" if tropa.nil?
 
-    @mapa.grafo.sucessores(fonte).each do |adj|
-      destino = adj.v
-      d = adj.peso
-      if d == direcao then
-        tropa.movimentar(n_soldados, destino)
-        return destino
-      end
-    end
+    destino = @mapa.get_local_adjacente fonte, direcao
+    raise DirecaoException, "Não existem locais nesta direção" if destino.nil?
 
-    raise DirecaoException, "Não existem locais nesta direção"
+    tropa.movimentar(n_soldados, destino)
+    return destino
   end
 
   # Recebe uma string {NORTE, SUL, LESTE, OESTE} e retorna um inteiro que representa a direção informada

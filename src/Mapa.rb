@@ -129,4 +129,18 @@ class Mapa
     return local_do_id
   end
 
+  # Retorna o local ajancente à fonte e ligada nela na direção especificada
+  # @param [Local] fonte : local fonte
+  # @param [Integer] direcao : direção a ser pesquisada
+  # @return [Local] Retorna o local ou nil caso não existam locais na direção especificada
+  def get_local_adjacente fonte, direcao
+    @grafo.sucessores(fonte).each do |adj|
+      destino = adj.v
+      d = adj.peso
+      return destino if d == direcao
+    end
+
+    return nil
+  end
+
 end
