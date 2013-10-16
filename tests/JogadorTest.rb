@@ -39,6 +39,16 @@ class JogadorTest < Test::Unit::TestCase
     assert_equal 0, @jogador.fila_de_atividades.size
   end
 
+  # Caso específico que causava erro ao deletar item dentro de um each block
+  # http://stackoverflow.com/questions/3260686
+  def testar_duas_atividades
+    @jogador.adicionar_atividade AtTest.new
+    @jogador.adicionar_atividade AtTest.new
+
+    @jogador.executar_atividades 1
+    assert_equal 0, @jogador.fila_de_atividades.size
+  end
+
   def testar_multiplas_atividades
     at1 = AtTest.new
     at2 = AtInfinitaTest.new

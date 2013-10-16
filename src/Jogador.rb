@@ -42,10 +42,8 @@ class Jogador
 
   # Executa todas as atividades da fila do jogador e exclui da fila as atividades terminadas
   def executar_atividades turno_atual
-    @fila_de_atividades.each do |atividade|
-      if atividade.executar(turno_atual)
-        @fila_de_atividades.delete atividade
-      end
+    @fila_de_atividades.delete_if do |atividade|
+      atividade.executar turno_atual
     end
   end
 
