@@ -76,9 +76,66 @@ class TropaTest < Test::Unit::TestCase
     tropa2 = Tropa.new @jogador, 7, nil
     tropa2.movimentar 3, @cidade
     assert_equal 13, @tropa.tamanho # Deve ter concatenado com @tropa
+    tropa2.regenerar_stamina
     tropa2.movimentar 4, @cidade
     assert_equal 17, @tropa.tamanho # Deve ter concatenado com @tropa
     assert_equal 0, tropa2.tamanho # Tropa original deve ter sido 'diluída'
+  end
+
+  def testar_regenerar_stamina
+    @tropa.movimentar 10, @cidade
+    assert_equal true, @tropa.cansada?
+    @tropa.regenerar_stamina
+    assert_equal false, @tropa.cansada?
+    @tropa.regenerar_stamina 1000
+    assert_equal Tropa::MAX_STAMINA, @tropa.stamina
+  end
+
+  def testar_regenerar_stamina_negativa
+    stamina_anterior = @tropa.stamina
+
+    assert_raise ArgumentError do
+      @tropa.regenerar_stamina -10
+    end
+
+    assert_equal stamina_anterior, @tropa.stamina
+  end
+
+  def testar_consumo_de_stamina_ao_mover_tropa_inteira
+    stamina_anterior = @tropa.stamina
+    @tropa.movimentar @tropa.tamanho, @cidade
+    assert_equal stamina_anterior - 1, @tropa.stamina
+    assert_equal @cidade, @tropa.local
+  end
+
+  def testar_consumo_de_stamina_ao_separar_tropas
+    stamina_anterior = @tropa.stamina
+    @tropa.movimentar 5, @local2
+    assert_equal stamina_anterior, @tropa.stamina
+    assert_equal stamina_anterior - 1, @local2.tropas[0].stamina
+  end
+
+  def testar_cansada
+    Tropa::MAX_STAMINA.times do |i|
+      @tropa.movimentar @tropa.tamanho, @local2
+    end
+
+    assert_equal true, @tropa.cansada?
+  end
+
+  def testar_se_atividade_de_descanso_eh_criada
+    @tropa.movimentar @tropa.tamanho, @local2
+    assert_equal true, @tropa.jogador.fila_de_atividades[1].kind_of?(AtDescansoTropa) # fila_de_atividades[0] contém uma instância de AtConquista
+  end
+
+  def testar_descanso_da_tropa
+    Tropa::MAX_STAMINA.times do |i|
+      @tropa.movimentar @tropa.tamanho, @local2
+    end
+
+    assert_equal true, @tropa.cansada?
+    @jogador.executar_atividades 1
+    assert_equal false, @tropa.cansada?
   end
 
 end

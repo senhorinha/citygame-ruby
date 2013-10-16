@@ -76,7 +76,9 @@ class Jogo
     destino = @mapa.get_local_adjacente fonte, direcao
     raise DirecaoException, "Não existem locais nesta direção" if destino.nil?
 
-    tropa.movimentar(n_soldados, destino)
+    result = tropa.movimentar(n_soldados, destino)
+    raise SemStaminaException, "A tropa está cansada por já ter se movido neste turno" unless result
+
     return destino
   end
 

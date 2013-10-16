@@ -20,3 +20,6 @@ class NumeroDeTropasException < CitygameException; end
 
 # Exception lançada quando a soma das tropas e tecnologia for maior que 10.
 class SomaDeRecursosException < CitygameException; end
+
+# Exception lançada quando uma tropa está sem stamina para executar uma ação.
+class SemStaminaException < CitygameException; end

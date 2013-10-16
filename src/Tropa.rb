@@ -3,10 +3,13 @@
 require_relative 'Local'
 require_relative 'Jogador'
 require_relative 'atividades/AtConquista'
+require_relative 'atividades/AtDescansoTropa'
 
 class Tropa
-  attr_reader :tamanho, :jogador
+  attr_reader :tamanho, :jogador, :stamina
   attr_accessor :local
+
+  MAX_STAMINA = 1
 
   # @param [Jogador] jogador
   # @param [Fixnum] tamanho
@@ -14,6 +17,7 @@ class Tropa
   def initialize jogador, tamanho, local
     @jogador = jogador
     @tamanho = tamanho
+    @stamina = MAX_STAMINA
     ocupar_local local
   end
 
@@ -21,12 +25,17 @@ class Tropa
     return @jogador.tecnologia * @tamanho
   end
 
-  # Movimenta uma quantidade de soldados da tropa para um novo local adjacente
+  # Movimenta uma quantidade de soldados da tropa para um novo local adjacente. Retorna verdadeiro em caso de sucesso e falso caso o movimento não seja permitido em função de falta de stamina
   # @param [Fixnum] n_soldados Número de soldados a serem movidos
   # @param [Local] local_novo
+  # @return [Boolean]
   def movimentar n_soldados, local_novo
+    return false if cansada?
     tropa_em_movimento = separar n_soldados
     tropa_em_movimento.ocupar_local local_novo
+    tropa_em_movimento.stamina -= 1
+    @jogador.adicionar_atividade AtDescansoTropa.new(tropa_em_movimento)
+    return true
   end
 
   # Concatena a tropa com outra, aumentando o número de soldados da tropa do objeto atual e reduzindo a 0 o tamanho da tropa parâmetro
@@ -67,10 +76,28 @@ class Tropa
     end
   end
 
+  # Retorna verdadeiro se a tropa está cansada (sem stamina)
+  # @return [Boolean]
+  def cansada?
+    return @stamina <= 0
+  end
+
+  # Regenera a stamina da tropa
+  # @param [Integer] add : stamina a ser adicionada para a tropa
+  def regenerar_stamina add = 1
+    raise ArgumentError, "Stamina deve ser positiva" if add < 0
+    @stamina += add
+    @stamina = MAX_STAMINA if @stamina > MAX_STAMINA
+  end
+
 protected
 
   def tamanho=(n)
     @tamanho = n
+  end
+
+  def stamina=(n)
+    @stamina = n
   end
 
 private
