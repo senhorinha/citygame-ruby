@@ -83,7 +83,10 @@ class TropaTest < Test::Unit::TestCase
   end
 
   def testar_regenerar_stamina
-    @tropa.movimentar 10, @cidade
+    Tropa::MAX_STAMINA.times do |i|
+      @tropa.movimentar 10, @cidade
+    end
+
     assert_equal true, @tropa.cansada?
     @tropa.regenerar_stamina
     assert_equal false, @tropa.cansada?

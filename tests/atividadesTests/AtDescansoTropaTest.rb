@@ -16,7 +16,10 @@ class AtDescansoTropaTest < Test::Unit::TestCase
   end
 
   def testar_regeneracao_de_stamina
-    @tropa.movimentar 10, @local
+    Tropa::MAX_STAMINA.times do |i|
+      @tropa.movimentar 10, @local
+    end
+
     assert_equal true, @tropa.cansada?
     @at.executar 1
     assert_equal false, @tropa.cansada?
