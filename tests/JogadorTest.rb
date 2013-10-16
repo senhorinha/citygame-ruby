@@ -6,11 +6,15 @@ require_relative '../src/Cidade'
 require_relative '../src/atividades/Atividade'
 
 class AtTest < Atividade
-
   def executar turno
     return true
   end
+end
 
+class AtInfinitaTest < Atividade
+  def executar turno
+    return false
+  end
 end
 
 class JogadorTest < Test::Unit::TestCase
@@ -33,6 +37,33 @@ class JogadorTest < Test::Unit::TestCase
 
     @jogador.executar_atividades(1)
     assert_equal 0, @jogador.fila_de_atividades.size
+  end
+
+  def testar_multiplas_atividades
+    at1 = AtTest.new
+    at2 = AtInfinitaTest.new
+    at3 = AtTest.new
+    at4 = AtInfinitaTest.new
+
+    @jogador.adicionar_atividade at1
+    @jogador.adicionar_atividade at2
+    @jogador.adicionar_atividade at3
+    @jogador.adicionar_atividade at4
+
+    assert_equal 4, @jogador.fila_de_atividades.size  # Testa se mantém o número de atividades
+
+    # Testa se mantém a ordem das atividades
+    assert_equal at1, @jogador.fila_de_atividades[0]
+    assert_equal at2, @jogador.fila_de_atividades[1]
+    assert_equal at3, @jogador.fila_de_atividades[2]
+    assert_equal at4, @jogador.fila_de_atividades[3]
+
+    @jogador.executar_atividades 1
+
+    # Testa se excluiu as atividades terminadas e manteve as infinitas
+    assert_equal 2, @jogador.fila_de_atividades.size
+    assert_equal at2, @jogador.fila_de_atividades[0]
+    assert_equal at4, @jogador.fila_de_atividades[1]
   end
 
    def testar_gerar_recursos
