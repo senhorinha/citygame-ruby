@@ -37,7 +37,7 @@ class ModoPartida < Modo
     puts "Tecnologia atual: #{@jogo.jogador_atual.tecnologia}"
     puts "Recursos:"
     @jogo.jogador_atual.cidades.each do |cidade|
-      puts "  cidade##{cidade.id} ~> soldados: +#{cidade.g_exercito} | tecnologia: +#{cidade.g_tecnologia}"
+      puts "  cidade##{cidade.id} ~> soldados: +#{cidade.g_tropas} | tecnologia: +#{cidade.g_tecnologia}"
     end
   end
 
