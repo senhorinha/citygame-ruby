@@ -59,14 +59,20 @@ class ModoPartida < Modo
     for i in 0...matriz.size
       for j in 0...matriz[0].size
         local = "%02d" % matriz[i][j].id
+
         # Para cada jogador que controlar uma tropa neste
         # território, será apresentado um X com a sua cor
-        # ou o tamanho da tropa caso ele seja o da vez
+        # ou o tamanho da tropa caso:
+        #   1. ele seja o da vez
+        #   2. o jogador da vez possua tropas no local
+
+        visivel = !matriz[i][j].get_tropa_jogador(@jogo.jogador_atual).nil? # Caso o jogador atual tenha tropas no local, ele pode ver o tamanho de todas as demais tropas (visivel é true neste caso)
+
         for jogador in @jogo.jogadores
           tropa_local = matriz[i][j].get_tropa_jogador jogador
           if tropa_local
-          tamanho_dos_locais += 14
-            if jogador == @jogo.jogador_atual
+            tamanho_dos_locais += 14
+            if jogador == @jogo.jogador_atual or visivel
               tamanho = tropa_local.tamanho.to_s
               local <<= ", " + tamanho.colorize(cor_jogador(jogador))
             else
