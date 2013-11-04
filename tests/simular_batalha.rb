@@ -59,14 +59,20 @@ class SimulacaoBatalha
 end
 
 if ARGV.size != 4 then
-  abort "Número de argumentos inválidos"
+  r = Random.new
+  ARGV[0] = r.rand(1...42)
+  ARGV[1] = r.rand(1...42)
+  ARGV[2] = r.rand(1...42)
+  ARGV[3] = r.rand(1...42)
+# elsif ARGV.size != 4
+#  abort "Número de argumentos inválidos"
 end
 
 batalha = SimulacaoBatalha.new ARGV[0], ARGV[1], ARGV[2], ARGV[3]
 batalha.imprimir_cabecalho
 batalha.imprimir_status
 
-begin
+while !batalha.terminou?
   batalha.executar_turno
   batalha.imprimir_status
-end while !batalha.terminou?
+end
