@@ -51,6 +51,8 @@ class Tropa
   # Reduz o número de soldados na tropa.
   # @param [Integer] n_soldados: Número de soldados a serem reduzidos da tropa atual
   def aniquilar n_soldados
+    raise ArgumentError, "Impossível aniquilar um número de soldados negativo" if n_soldados < 0
+
     @tamanho -= n_soldados
     @tamanho = 0 if @tamanho < 1
   end

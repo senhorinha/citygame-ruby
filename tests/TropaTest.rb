@@ -70,6 +70,11 @@ class TropaTest < Test::Unit::TestCase
     assert_equal 8, @tropa.tamanho
     @tropa.aniquilar 100
     assert_equal 0, @tropa.tamanho
+
+    # Aniquilar um valor negativo:
+    assert_raise ArgumentError do
+      @tropa.aniquilar -10
+    end
   end
 
   def testar_concatenar_tropas_ao_mover
