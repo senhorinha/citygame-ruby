@@ -11,6 +11,9 @@ class JogoTest < Test::Unit::TestCase
     @jogo.criar_jogador 'Napoleão'
     @jogo.criar_jogador 'César'
 
+    @napoleao = @jogo.jogadores[0]
+    @cesar = @jogo.jogadores[1]
+
     @jogo_sem_jogadores = Jogo.new
   end
 
@@ -66,6 +69,18 @@ class JogoTest < Test::Unit::TestCase
 
     @jogo.passar_a_vez
     assert_equal primeiro_jogador, @jogo.jogador_atual
+  end
+
+  def test_perdeu?
+    @jogo.iniciar
+    assert_equal false, @jogo.perdeu?(@napoleao)
+    assert_equal false, @jogo.perdeu?(@cesar)
+
+    paris = @napoleao.cidades[0]
+    @napoleao.cidades.clear
+    assert_equal false, @jogo.perdeu?(@napoleao)
+    paris.tropas.clear
+    assert_equal true, @jogo.perdeu?(@napoleao)
   end
 
 end

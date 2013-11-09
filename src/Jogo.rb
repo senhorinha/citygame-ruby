@@ -90,4 +90,12 @@ class Jogo
     return @mapa.str_direcao str_dir
   end
 
+  # Checa se o jogador perdeu o jogo (caso não possua mais nenhuma cidade sob seu domínio E não tenha mais nenhuma tropa viva)
+  # @param [Jogador]
+  # @return [Boolean]
+  def perdeu? jogador
+    return false if !jogador.cidades.empty?                   # Checa se o jogador possui cidades
+    return @mapa.locais_com_tropa_do_jogador(jogador).empty?  # Checa se o jogador possui tropas vivas
+  end
+
 end
