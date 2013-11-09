@@ -22,7 +22,7 @@ class Tropa
   end
 
   def forca
-    return @jogador.tecnologia * @tamanho
+    return (@jogador.tecnologia ** 3) * @tamanho
   end
 
   # Movimenta uma quantidade de soldados da tropa para um novo local adjacente. Retorna verdadeiro em caso de sucesso e falso caso o movimento não seja permitido em função de falta de stamina
