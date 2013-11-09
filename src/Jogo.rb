@@ -33,6 +33,7 @@ class Jogo
 
     @jogadores.each do |jogador|
       @mapa.atribuir_cidade_ao_jogador jogador
+      jogador.gerar_recursos()
     end
 
     @turno = 1
