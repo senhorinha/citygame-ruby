@@ -143,4 +143,27 @@ class Mapa
     return nil
   end
 
+  # Retorna uma lista dos locais em que existem tropas do jogador
+  # @param [Jogador]
+  # @return [Array]
+  def locais_com_tropa_do_jogador jogador
+    locais = []
+
+    @grafo.vertices.each do |local|
+      locais.push local if tropa_jogador? jogador, local
+    end
+
+    return locais
+  end
+
+protected
+
+  # Checa se existem tropas do jogador no local
+  # @param [Jogador]
+  # @param [Local]
+  # @return [Boolean]
+  def tropa_jogador? jogador, local
+    return local.get_tropa_jogador(jogador) != nil
+  end
+
 end

@@ -13,6 +13,7 @@ class MapaTest < Test::Unit::TestCase
     @mapa.criar_locais
 
     @napoleao = Jogador.new 1, 'Napoleão'
+    @cesar    = Jogador.new 2, 'Júlio César'
   end
 
   def test_criar_locais
@@ -50,6 +51,20 @@ class MapaTest < Test::Unit::TestCase
   def test_get_local_by_id
     assert_equal true, @mapa.get_local_by_id(1).kind_of?(Local)
     assert_equal nil, @mapa.get_local_by_id(910238108109)
+  end
+
+  def test_locais_com_tropas_do_jogador
+    assert_empty @mapa.locais_com_tropa_do_jogador(@napoleao)
+    Tropa.new @napoleao, 5, @mapa.campos[0]
+    Tropa.new @napoleao, 3, @mapa.campos[1]
+    locais = @mapa.locais_com_tropa_do_jogador(@napoleao)
+    assert_not_empty locais
+    assert_equal true, locais.include?(@mapa.campos[0])
+    assert_equal true, locais.include?(@mapa.campos[1])
+
+    assert_empty @mapa.locais_com_tropa_do_jogador(@cesar)
+    Tropa.new @cesar, 1, @mapa.campos[0]
+    assert_not_empty @mapa.locais_com_tropa_do_jogador(@cesar)
   end
 
 end
