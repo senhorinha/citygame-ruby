@@ -45,6 +45,10 @@ class Jogo
     @jogador_atual.gerar_recursos()
     @jogador_atual.executar_atividades(@turno)
 
+    if @jogador_atual.perdeu? then
+      jogadores.delete @jogador_atual
+    end
+
     id_jogador_atual = @jogador_atual.id
     id_jogador_atual = id_jogador_atual + 1
     id_jogador_atual = 0 if id_jogador_atual >= @jogadores.size

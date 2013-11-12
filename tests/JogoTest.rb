@@ -71,4 +71,19 @@ class JogoTest < Test::Unit::TestCase
     assert_equal primeiro_jogador, @jogo.jogador_atual
   end
 
+  def test_remover_jogador_perdedor_ao_passar_a_vez
+    @jogo.iniciar
+
+    paris = @napoleao.cidades[0]
+    @napoleao.cidades.clear
+    @napoleao.tropas.clear
+
+    assert_equal 2, @jogo.jogadores.size
+    @jogo.jogadores.size.times do
+      @jogo.passar_a_vez
+    end
+    assert_equal 1, @jogo.jogadores.size
+    assert_equal false, @jogo.jogadores.include?(@napoleao)
+  end
+
 end
