@@ -26,6 +26,13 @@ class TropaTest < Test::Unit::TestCase
     assert_equal tropa, nova_cidade.tropas[0]
   end
 
+  def testar_associacao_de_tropa_ao_jogador_no_momento_de_criacao
+    assert_equal true, @jogador.tropas.include?(@tropa)
+    tropa = Tropa.new @jogador, 3, Cidade.new(2)
+    assert_equal true, @jogador.tropas.include?(tropa)
+    assert_equal 2, @jogador.tropas.size
+  end
+
   def testar_forca
     assert @tropa.forca == @tropa.tamanho * @jogador.tecnologia
   end
@@ -52,6 +59,12 @@ class TropaTest < Test::Unit::TestCase
     assert_equal 8, @cidade.tropas[0].tamanho
   end
 
+  def testar_associacao_de_tropa_ao_jogador_ao_separar_tropa
+    assert_equal 1, @jogador.tropas.size
+    @tropa.movimentar 2, @local2
+    assert_equal 2, @jogador.tropas.size
+  end
+
   def testar_concatenar_tropas_de_diferentes_jogadores
     assert_raise ArgumentError do
       @tropa.concatenar @tropa_inimiga
@@ -65,6 +78,14 @@ class TropaTest < Test::Unit::TestCase
     assert_equal 0, tropa2.tamanho
   end
 
+  def testar_se_referencia_da_tropa_concatenada_eh_removida_do_jogador
+    tropa2 = Tropa.new @jogador, 4, @cidade
+    @tropa.concatenar tropa2
+    assert_equal 1, @jogador.tropas.size
+    assert_equal false, @jogador.tropas.include?(tropa2)
+    assert_equal true, @jogador.tropas.include?(@tropa)
+  end
+
   def testar_aniquilar
     @tropa.aniquilar 2
     assert_equal 8, @tropa.tamanho
@@ -75,6 +96,11 @@ class TropaTest < Test::Unit::TestCase
     assert_raise ArgumentError do
       @tropa.aniquilar -10
     end
+  end
+
+  def testar_se_referencia_da_tropa_aniquilada_eh_removida_do_jogador
+    @tropa.aniquilar @tropa.tamanho
+    assert_equal false, @jogador.tropas.include?(@tropa)
   end
 
   def testar_concatenar_tropas_ao_mover

@@ -18,6 +18,7 @@ class Tropa
     @jogador = jogador
     @tamanho = tamanho
     @stamina = MAX_STAMINA
+    jogador.tropas.push self
     ocupar_local local
   end
 
@@ -45,6 +46,7 @@ class Tropa
 
     @tamanho += tropa.tamanho
     tropa.tamanho = 0
+    @jogador.tropas.delete tropa # Remove a referência da tropa concatenada do jogador
     return self
   end
 
@@ -55,6 +57,7 @@ class Tropa
 
     @tamanho -= n_soldados
     @tamanho = 0 if @tamanho < 1
+    @jogador.tropas.delete self if @tamanho == 0
   end
 
   # Faz a tropa ocupar um novo local

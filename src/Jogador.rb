@@ -2,7 +2,7 @@
 
 class Jogador
   attr_reader :id, :nome
-  attr_reader :cidades
+  attr_reader :cidades, :tropas
   attr_reader :fila_de_atividades
   attr_accessor :tecnologia
 
@@ -11,6 +11,7 @@ class Jogador
     @nome = nome
     @tecnologia = 1
     @cidades = []
+    @tropas = []
     @fila_de_atividades = []
   end
 
