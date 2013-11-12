@@ -94,4 +94,11 @@ class Jogo
     return @mapa.str_direcao str_dir
   end
 
+  # Checa se o jogo terminou (se somente um jogador ainda está na partida)
+  # O jogador vencedor é o único que ainda está em @jogadores
+  # @return [Boolean]
+  def terminou?
+    return @jogadores.size <= 1
+  end
+
 end

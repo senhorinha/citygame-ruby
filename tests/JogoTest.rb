@@ -86,4 +86,11 @@ class JogoTest < Test::Unit::TestCase
     assert_equal false, @jogo.jogadores.include?(@napoleao)
   end
 
+  def test_terminou?
+    @jogo.iniciar
+    assert_equal false, @jogo.terminou?
+    @jogo.jogadores.delete @napoleao
+    assert_equal true, @jogo.terminou?
+  end
+
 end
