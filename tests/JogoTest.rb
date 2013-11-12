@@ -71,16 +71,4 @@ class JogoTest < Test::Unit::TestCase
     assert_equal primeiro_jogador, @jogo.jogador_atual
   end
 
-  def test_perdeu?
-    @jogo.iniciar
-    assert_equal false, @jogo.perdeu?(@napoleao)
-    assert_equal false, @jogo.perdeu?(@cesar)
-
-    paris = @napoleao.cidades[0]
-    @napoleao.cidades.clear
-    assert_equal false, @jogo.perdeu?(@napoleao)
-    paris.tropas.clear
-    assert_equal true, @jogo.perdeu?(@napoleao)
-  end
-
 end

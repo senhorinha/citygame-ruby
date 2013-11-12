@@ -48,4 +48,10 @@ class Jogador
     end
   end
 
+  # Checa se o jogador perdeu o jogo (caso não possua mais nenhuma cidade sob seu domínio E não tenha mais nenhuma tropa viva)
+  # @return [Boolean]
+  def perdeu?
+    return @cidades.empty? && @tropas.empty?
+  end
+
 end

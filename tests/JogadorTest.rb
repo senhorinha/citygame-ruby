@@ -3,6 +3,7 @@
 require 'test/unit'
 require_relative '../src/Jogador'
 require_relative '../src/Cidade'
+require_relative '../src/Tropa'
 require_relative '../src/atividades/Atividade'
 
 class AtTest < Atividade
@@ -91,6 +92,18 @@ class JogadorTest < Test::Unit::TestCase
     assert_equal 10, @cidade.tropas[0].tamanho
     assert_equal @jogador, @cidade.tropas[0].jogador
     assert_equal 1, @cidade.tropas.size
+  end
+
+  def testar_perdeu?
+    assert_equal true, @jogador.perdeu?
+    @jogador.atribuir_cidade @cidade
+    assert_equal false, @jogador.perdeu?
+    @jogador.cidades.clear
+    assert_equal true, @jogador.perdeu?
+    Tropa.new @jogador, 10, @cidade
+    assert_equal false, @jogador.perdeu?
+    @jogador.tropas.clear
+    assert_equal true, @jogador.perdeu?
   end
 
 end
