@@ -30,7 +30,13 @@ class ModoPartida < Modo
 
   def passar
     @jogo.passar_a_vez
-    clear()
+    if @jogo.terminou?
+      vencedor = @jogo.jogadores.pop
+      puts "Parabéns #{vencedor.nome}! Você venceu."
+      @ativo = false
+    else
+      clear()
+    end
   end
 
   def status
