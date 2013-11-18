@@ -6,7 +6,7 @@ class ModoNovoJogo < Modo
 
   def initialize jogo
     super jogo
-    @comandos = ['exit', 'help', 'criar_jogador', 'status', 'iniciar']
+    @comandos = ['exit', 'help', 'registrar', 'login', 'criar_jogador', 'status', 'iniciar']
   end
 
   def prefixo
@@ -17,10 +17,27 @@ class ModoNovoJogo < Modo
     puts "  Opções de criação de novo jogo:"
     puts "    * help                 - Exibe este texto de ajuda"
     puts "    * exit                 - Encerra o jogo"
+    puts "    * registrar            - Cria um novo jogador e o adiciona na base de dados"
+    puts "    * login                - Loga o jogador e o adiciona na partida (username e senha necessários)"
     puts "    * criar_jogador [nome] - Cria um novo jogador com o nome passado"
     puts "    * status               - Mostra os jogadores atuais"
     puts "    * iniciar              - Inicia a partida com os jogadores atuais, iniciando o modo 'partida'"
     puts ""
+  end
+
+  def registrar
+    username = ask 'username: '
+    senha = ask_encrypted 'senha: '
+    senha_confirm = ask_encrypted 'confirmação de senha: '
+    puts username, senha, senha_confirm
+    warning_msg "TODO: Adicionar na base de dados aqui"
+  end
+
+  def login
+    username = ask 'username: '
+    senha = ask_encrypted 'senha: '
+    puts username, senha
+    warning_msg "TODO: Busca jogador aqui e o adiciona na partida"
   end
 
   def criar_jogador nome
