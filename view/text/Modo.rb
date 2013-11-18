@@ -80,6 +80,25 @@ class Modo
     system 'clear' unless system 'cls'
   end
 
+  # Faz uma pergunta ao usuário, esperando pela resposta
+  # @param [string] msg: mensagem a ser digitada antes do input
+  # @return [string]
+  def ask msg
+    print msg
+    gets.chomp
+  end
+
+  # Faz uma pergunta ao usuário, esperando pela resposta e não mostrando-a na tela
+  # @param [string] msg: mensagem a ser digitada antes do input
+  # @return [string]
+  def ask_encrypted msg
+    system 'stty -echo'
+    r = ask msg
+    system 'stty echo'
+    puts
+    return r
+  end
+
 private
 
   # Checa se o comando é válido dentro do contexto do modo atual
