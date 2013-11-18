@@ -50,7 +50,7 @@ class Modo
   # Imprime uma mensagem padrão de confirmação
   # @param [String] Mensagem apresentada
   # @return [Boolean] True em caso de confirmação
-  def confirmar_comando msg
+  def confirm_msg msg
     print msg.colorize(:yellow), " (s, n) "
     c = gets
     c = c.strip.downcase
@@ -117,7 +117,7 @@ public
 
   # Encerra o jogo e termina a aplicação
   def exit
-    c = confirmar_comando "Encerrar o jogo, perdendo todas as informações?"
+    c = confirm_msg "Encerrar o jogo, perdendo todas as informações?"
     @ativo = !c
   end
 
