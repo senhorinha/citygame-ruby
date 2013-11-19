@@ -29,7 +29,16 @@ class ModoNovoJogo < Modo
     username = ask 'username: '
     senha = ask_encrypted 'senha: '
     senha_confirm = ask_encrypted 'confirmação de senha: '
-    puts username, senha, senha_confirm
+
+    begin
+      user = Usuario.new username, senha, senha_confirm
+    rescue ArgumentError => e
+      warning_msg e.to_s
+      return registrar
+    end
+
+    # TODO: Testar ainda se esse username já não existe no DB!
+    # TODO: UsuarioDAO.create user -> PERSISTIR USUÁRIO!
     warning_msg "TODO: Adicionar na base de dados aqui"
   end
 
