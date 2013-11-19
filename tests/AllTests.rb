@@ -4,6 +4,7 @@ require_relative 'LocalTest.rb'
 require_relative 'CidadeTest.rb'
 require_relative 'MapaTest.rb'
 require_relative 'JogoTest.rb'
+require_relative 'UsuarioTest.rb'
 
 # Testes das atividades
 require_relative 'atividadesTests/AtConquistaTest.rb'
