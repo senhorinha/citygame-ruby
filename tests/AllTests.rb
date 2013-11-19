@@ -1,3 +1,5 @@
+# -*- encoding : utf-8 -*-
+
 require_relative 'TropaTest.rb'
 require_relative 'JogadorTest.rb'
 require_relative 'LocalTest.rb'

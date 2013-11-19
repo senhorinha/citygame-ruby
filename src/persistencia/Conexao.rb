@@ -1,3 +1,5 @@
+# -*- encoding : utf-8 -*-
+
 require 'pg'
 
 # Classe para criar uma conexao ao banco
