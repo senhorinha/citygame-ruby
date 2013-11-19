@@ -3,10 +3,16 @@
 require_relative 'Usuario'
 
 class LogBatalha
-  attr_reader :jogadores, :turnos, :vencedor
+  attr_accessor :jogadores, :turnos, :vencedor
 
   def initialize
+    @jogadores = []
+  end
 
+  # Adiciona um jogador ao log
+  # @param [Usuario]
+  def adicionar_jogador jogador
+    @jogadores.push jogador
   end
 
 end

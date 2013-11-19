@@ -3,16 +3,18 @@ require_relative 'exceptions'
 require_relative 'Jogador'
 require_relative 'Cidade'
 require_relative 'Mapa'
+require_relative 'LogBatalha'
 
 class Jogo
   attr_reader :jogadores, :jogador_atual
   attr_reader :turno
-  attr_reader :mapa
+  attr_reader :mapa, :log
 
   def initialize
     @turno = 0
     @jogadores = []
     @mapa = Mapa.new
+    @log = LogBatalha.new
   end
 
   # Cria um novo jogador
@@ -23,6 +25,7 @@ class Jogo
 
     jogador = Jogador.new @jogadores.size, nome
     @jogadores.push jogador
+    @log.adicionar_jogador jogador
   end
 
   # Inicia a partida, passando a vez para o primeiro jogador
@@ -47,6 +50,12 @@ class Jogo
 
     if @jogador_atual.perdeu? then
       jogadores.delete @jogador_atual
+
+      if terminou? then
+        @log.turnos = @turno
+        @log.vencedor = @jogadores[0]
+        # TODO: LogBatalhaDAO.create(@log) PERSISTIR LOGBATALHA!
+      end
     end
 
     id_jogador_atual = @jogador_atual.id

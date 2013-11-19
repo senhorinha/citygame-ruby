@@ -93,4 +93,20 @@ class JogoTest < Test::Unit::TestCase
     assert_equal true, @jogo.terminou?
   end
 
+  def testar_inclusao_de_jogadores_no_log_batalha
+    assert_equal true, @jogo.log.jogadores.include?(@napoleao)
+    assert_equal true, @jogo.log.jogadores.include?(@cesar)
+  end
+
+  def testar_configuracao_do_log_batalha_no_final_da_partida
+    @jogo.iniciar
+    @jogo.passar_a_vez
+    @napoleao.cidades.clear
+    @napoleao.tropas.clear
+    @jogo.passar_a_vez
+    assert_equal true, @jogo.terminou?
+    assert_equal @cesar, @jogo.log.vencedor
+    assert_equal 2, @jogo.log.turnos
+  end
+
 end
