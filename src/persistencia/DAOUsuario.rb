@@ -1,3 +1,5 @@
+require_relative 'Conexao'
+
 class DAOUsuario
 
 	 attr_reader :conexao
@@ -9,23 +11,23 @@ end
 # Cadastra usuario na tabela usuarios
 # @param [String] username
 # @param [String] password
-def cadastrar username,password
+def create username,password
+	@conexao.conectar
 	if validar_campos username
-		@conexao.conectar
-		@conexao.prepare("cadastrar_usuario", "insert into usuarios (username, password) values ($1, $2)")
-    	@conexao.exec_prepared("cadastrar_usuario", [username, password])
-    	@conexao.desconectar
-  end
+		@conexao.prepare("create", "insert into usuarios (username, password) values ($1, $2)")
+    	@conexao.exec_prepared("create", [username, password])
+  	end
+  	@conexao.desconectar
 end
 
 # Procura usuario na tabela usuarios
 # @param [String] username
 # @param [String] password
 # @return [Usuario] usuario
-def procurar username, password
+def read username, password
 	@conexao.conectar
-	@conexao.prepare("verificar_se_existe_usuario", "SELECT * FROM usuarios where username = ($1) and password = ($2)")
-	resultado = @conexao.exec_prepared("verificar_se_existe_usuario",[username,password])
+	@conexao.prepare("read", "SELECT * FROM usuarios where username = ($1) and password = ($2)")
+	resultado = @conexao.exec_prepared("read",[username,password])
 	conexao.desconectar
 	unless resultado.empty?
 		return Usuario.new username,password

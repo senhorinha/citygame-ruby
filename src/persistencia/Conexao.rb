@@ -1,17 +1,16 @@
-
-require 'PG'
+require 'pg'
 
 # Classe para criar uma conexao ao banco
 class Conexao
 
-  def conecta
+  def conectar
     @@conexao = PG.connect(
         :dbname => 'citygame_db',
-        :user => '[postgre]',
+        :user => '[postgres]',
         :password => '[]')
   end
 
-  def desconecta
+  def desconectar
   	@@conexao.close
   end
 
