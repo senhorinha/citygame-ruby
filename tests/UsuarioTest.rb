@@ -59,9 +59,9 @@ class UsuarioTest < Test::Unit::TestCase
     Usuario.register 'napoleao', '1234', '1234'
   end
 
-  def testar_se_password_foi_criptografado
+  def testar_password
     user = Usuario.register 'cesar', 'daiacesaroqueehdecesar', 'daiacesaroqueehdecesar'
-    assert_not_equal 'daiacesaroqueehdecesar', user.password
+    assert_equal 'daiacesaroqueehdecesar', user.password
   end
 
   def testar_registro

@@ -23,7 +23,6 @@ class Usuario
     user = Usuario.new username, password
     raise ArgumentError, "A senha e sua confirmação não são idênticas" unless password == password_confirm
 
-    user.password = Usuario.digest password
     return user
   end
 
@@ -33,10 +32,6 @@ class Usuario
 
   def self.valid_password? password
     !password.match(/^.{4,30}$/).nil?
-  end
-
-  def self.digest password
-    Digest::SHA1.hexdigest(password)[0..29]
   end
 
 end

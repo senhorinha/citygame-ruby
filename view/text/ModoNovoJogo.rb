@@ -55,7 +55,7 @@ class ModoNovoJogo < Modo
     senha = ask_encrypted 'senha: '
 
     dao = DAOUsuario.new
-    user = dao.read username, Usuario.digest(senha)
+    user = dao.read username, senha
 
     if !user then
       warning_msg "Usuário não existe ou a senha não confere"
