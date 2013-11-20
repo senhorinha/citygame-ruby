@@ -41,7 +41,7 @@ class ModoNovoJogo < Modo
     begin
       dao = DAOUsuario.new
       dao.create user.username, user.password
-    rescue => e
+    rescue UsernameJaExistente => e
       warning_msg e.to_s
       return
     end
