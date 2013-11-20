@@ -26,7 +26,8 @@ class DAOUsuario
 		unless resultado.values.empty?
 			return Usuario.new username, password
 		end
-		#TODO: Avisar usuário? Lançar excpetion?
+
+		return false
 	end
 
 end

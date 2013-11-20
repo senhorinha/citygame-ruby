@@ -52,8 +52,17 @@ class ModoNovoJogo < Modo
   def login
     username = ask 'username: '
     senha = ask_encrypted 'senha: '
-    puts username, senha
-    warning_msg "TODO: Busca jogador aqui e o adiciona na partida"
+
+    dao = DAOUsuario.new
+    user = dao.read username, Usuario.digest(senha)
+
+    if !user then
+      warning_msg "Usuário não existe ou a senha não confere"
+      return
+    end
+
+    @jogo.adicionar_usuario user
+    success_msg "Usuário #{user.username} adicionado na partida!"
   end
 
   def criar_jogador nome
