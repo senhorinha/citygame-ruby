@@ -18,10 +18,10 @@ class DAOLogBatalha
 		# Preenche tabela batalhas
 		CONNECTION.exec( "INSERT INTO batalhas (id,turnos, vencedor) values (#{id}, #{turnos}, '#{vencedor_username}')" )
 
-		# Preenche tabela batalha_usuarios (dependência de id com batalhas)
+		# Preenche tabela batalha_usuario (dependência de id com batalhas)
 		jogadores.each do |usuario|
 			username = usuario.username
-			CONNECTION.exec( "INSERT INTO batalha_usuarios (username, batalha_id) values ('#{username}', #{id})")
+			CONNECTION.exec( "INSERT INTO batalha_usuario (username, batalha_id) values ('#{username}', #{id})")
 		end
 	end
 
@@ -39,13 +39,13 @@ class DAOLogBatalha
 		query_batalhas.each do |resultado_tabela_batalhas|
 			jogadores = []
 
-			# Busca username (Usuario) na tabela batalha_usuarios com o id da batalha
-			query_username_jogadores = CONNECTION.exec( "SELECT username FROM batalha_usuarios where batalha_id = #{resultado_tabela_batalhas['id']}" )
-			query_username_jogadores.each do |resultado_tabela_batalha_usuarios|
+			# Busca username (Usuario) na tabela batalha_usuario com o id da batalha
+			query_username_jogadores = CONNECTION.exec( "SELECT username FROM batalha_usuario where batalha_id = #{resultado_tabela_batalhas['id']}" )
+			query_username_jogadores.each do |resultado_tabela_batalha_usuario|
 				# Busca password (Usuario) da tabela usuarios
-				query_password = CONNECTION.exec( "SELECT password FROM usuarios where username = '#{resultado_tabela_batalha_usuarios['username']}' " )
+				query_password = CONNECTION.exec( "SELECT password FROM usuarios where username = '#{resultado_tabela_batalha_usuario['username']}' " )
 				query_password.each do |resultado_tabela_usuarios|
-					jogadores.push (Usuario.new resultado_tabela_batalha_usuarios['username'], resultado_tabela_usuarios['password'],resultado_tabela_usuarios['password'])
+					jogadores.push (Usuario.new resultado_tabela_batalha_usuario['username'], resultado_tabela_usuarios['password'])
 				end
 				query_password.clear
 			end

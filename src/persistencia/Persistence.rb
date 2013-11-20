@@ -9,7 +9,7 @@ module Persistence
     :port => 5432,
     :dbname => 'citygame_db',
     :user => 'postgres',
-    :password => 'eutenho'
+    :password => '1234'
   )
 
 end

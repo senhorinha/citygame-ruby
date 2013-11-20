@@ -9,8 +9,8 @@ class DAOLogBatalhaTest < Test::Unit::TestCase
 
   def setup
     @dao = DAOLogBatalha.new
-    @usuario_1 = Usuario.new "Luis_IV", "r31d4guerr4","r31d4guerr4"
-    @usuario_2 = Usuario.new "napoleao", "r31d4guerr4","r31d4guerr4"
+    @usuario_1 = Usuario.new "Luis_IV", "r31d4guerr4"
+    @usuario_2 = Usuario.new "napoleao", "r31d4guerr4"
     @log = LogBatalha.new
     @log.turnos = 10
     @log.adicionar_jogador @usuario_1
