@@ -30,7 +30,12 @@ class Jogador
   # @return [Boolean] true se a cidade foi atribuída ou false se a cidade já pertencia ao jogador
   def atribuir_cidade cidade
     return false if @cidades.include? cidade
-    cidade.jogador = self
+    if cidade.jogador then
+      atual_proprietario = cidade.jogador
+      atual_proprietario.cidades.delete cidade
+    end
+    atual_proprietario = self
+    cidade.jogador = atual_proprietario
     @cidades.push cidade
     return true
   end

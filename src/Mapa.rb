@@ -1,10 +1,9 @@
 # -*- encoding : utf-8 -*-
 
 require_relative 'exceptions'
-require_relative 'simple-graph/src/Digrafo'
 
 class Mapa
-  attr_reader :campos, :cidades, :matriz, :grafo
+  attr_reader :campos, :cidades, :matriz
 
   # Constantes
   LESTE = 3
@@ -33,7 +32,7 @@ class Mapa
   # @return [Integer] Int que representa a direção ou nil em caso de direção não reconhecida
   def str_direcao str_dir
     direcao = nil
-
+    
     case str_dir.upcase
       when 'NORTE'
         direcao = NORTE
@@ -69,8 +68,7 @@ class Mapa
       loc[i], loc[destino_randomico] = loc[destino_randomico], loc[i]
     end
 
-    # Criar grafo que representa os locais do jogo
-    # Exemplo de mapa criado para auxiliar a criacao do grafo:
+    # Exemplo de mapa criado:
     #      local(04)--local(08)--local(10)-- ... --local(56)
     #         |          |           |                 |
     #      local(01)--local(03)--local(02)-- ... --local(34)
@@ -82,25 +80,14 @@ class Mapa
     largura = n_loc**(0.5)
     comprimento = largura
     mapa = Array.new(comprimento) { |linha| linha = Array.new(largura) }
-    grafo = Digrafo.new
     for i in 0...comprimento
       for j in 0...largura
         mapa[i][j] = loc[k]
-        grafo.adicionar_vertice(mapa[i][j])
-        unless (j-1) < 0
-          grafo.conectar(mapa[i][j], mapa[i][j-1], OESTE)
-          grafo.conectar(mapa[i][j-1], mapa[i][j], LESTE)
-        end
-        unless (i-1) < 0
-          grafo.conectar(mapa[i][j], mapa[i-1][j], NORTE)
-          grafo.conectar(mapa[i-1][j], mapa[i][j], SUL)
-        end
         k = k + 1
       end
     end
-
+    
     @matriz = mapa
-    @grafo = grafo
   end
 
   # Atribui uma cidade aleatório do mapa ao jogador
@@ -119,10 +106,12 @@ class Mapa
   def get_local_by_id id
     local_do_id = nil
 
-    @grafo.vertices.each do |local|
-      if local.id == id then
-        local_do_id = local
-        break
+    @matriz.each_index do |i|
+      @matriz[i].each_index do |j|
+        if @matriz[i][j].id == id then
+          local_do_id = @matriz[i][j]
+          break
+        end
       end
     end
 
@@ -134,23 +123,27 @@ class Mapa
   # @param [Integer] direcao : direção a ser pesquisada
   # @return [Local] Retorna o local ou nil caso não existam locais na direção especificada
   def get_local_adjacente fonte, direcao
-    @grafo.sucessores(fonte).each do |adj|
-      destino = adj.v
-      d = adj.peso
-      return destino if d == direcao
+    adjacente = nil
+    
+    @matriz.each_index do |i|
+      @matriz[i].each_index do |j|
+        if @matriz[i][j].id == fonte.id then
+          case direcao
+            when NORTE
+              adjacente = @matriz[i-1][j] if @matriz[i-1][j]
+            when SUL
+              adjacente = @matriz[i+1][j] if @matriz[i+1][j]
+            when LESTE
+              adjacente = @matriz[i][j+1] if @matriz[i][j+1]
+            when OESTE
+              adjacente = @matriz[i][j-1] if @matriz[i][j-1]
+          end
+          break
+        end
+      end
     end
-
-    return nil
-  end
-
-protected
-
-  # Checa se existem tropas do jogador no local
-  # @param [Jogador]
-  # @param [Local]
-  # @return [Boolean]
-  def tropa_jogador? jogador, local
-    return local.get_tropa_jogador(jogador) != nil
+    
+    return adjacente
   end
 
 end
