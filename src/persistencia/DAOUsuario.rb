@@ -6,12 +6,11 @@ class DAOUsuario
 	include Persistence
 
 	# Cadastra usuario na tabela usuarios
-	# @param [String] username
-	# @param [String] password
-	def create username, password
-		if validar_campos username
-			CONNECTION.prepare("create", "INSERT INTO usuarios (username, password) values ($1, $2)")
-	    CONNECTION.exec_prepared("create", [username, password])
+	# @param [Usuario] username
+	def create usuario
+		username = usuario.username
+		password = usuario.password
+	    @conn.exec( "INSERT INTO usuarios (username, password) values (#{username}, #{password})" )
 	  end
 	end
 
