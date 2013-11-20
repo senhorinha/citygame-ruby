@@ -146,14 +146,4 @@ class Mapa
     return adjacente
   end
 
-protected
-
-  # Checa se existem tropas do jogador no local
-  # @param [Jogador]
-  # @param [Local]
-  # @return [Boolean]
-  def tropa_jogador? jogador, local
-    return local.get_tropa_jogador(jogador) != nil
-  end
-
 end
