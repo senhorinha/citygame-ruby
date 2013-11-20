@@ -23,3 +23,6 @@ class SomaDeRecursosException < CitygameException; end
 
 # Exception lançada quando uma tropa está sem stamina para executar uma ação.
 class SemStaminaException < CitygameException; end
+
+# Exception lançada quando há duplicata de username (PRIMARY KEY).
+class UsernameJaExistente < CitygameException; end
