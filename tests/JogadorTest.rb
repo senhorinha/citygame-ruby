@@ -22,6 +22,7 @@ class JogadorTest < Test::Unit::TestCase
 
   def setup
     @jogador = Jogador.new 1, "Napoleão"
+    @cesar = Jogador.new 2, "César"
     @cidade = Cidade.new 1
   end
 
@@ -29,6 +30,13 @@ class JogadorTest < Test::Unit::TestCase
     @jogador.atribuir_cidade @cidade
     assert @jogador.cidades.include?(@cidade)
     assert_equal @jogador, @cidade.jogador
+  end
+
+  def testear_se_atribuicao_de_cidade_remove_a_cidade_do_antigo_proprietario
+    @jogador.atribuir_cidade @cidade
+    assert_equal true, @jogador.cidades.include?(@cidade)
+    @cesar.atribuir_cidade @cidade
+    assert_equal false, @jogador.cidades.include?(@cidade)
   end
 
   def testar_executar_atividades
