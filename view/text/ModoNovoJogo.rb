@@ -31,7 +31,7 @@ class ModoNovoJogo < Modo
     senha_confirm = ask_encrypted 'confirmação de senha: '
 
     begin
-      user = Usuario.new username, senha, senha_confirm
+      user = Usuario.register username, senha, senha_confirm
     rescue ArgumentError => e
       warning_msg e.to_s
       return registrar

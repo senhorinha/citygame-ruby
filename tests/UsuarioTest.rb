@@ -22,9 +22,16 @@ class UsuarioTest < Test::Unit::TestCase
 
   def testar_criacao_com_username_invalido
     assert_raise ArgumentError do
-      Usuario.new 'Napoleão1', 'r31d4guerr4', 'r31d4guerr4'
+      Usuario.new 'Napoleão1', 'r31d4guerr4'
     end
-    Usuario.new 'napoleao', 'r31d4guerr4', 'r31d4guerr4'
+    Usuario.new 'napoleao', 'r31d4guerr4'
+  end
+
+  def testar_registro_com_username_invalido
+    assert_raise ArgumentError do
+      Usuario.register 'Napoleão1', 'r31d4guerr4', 'r31d4guerr4'
+    end
+    Usuario.register 'napoleao', 'r31d4guerr4', 'r31d4guerr4'
   end
 
   def testar_validacao_de_password
@@ -38,27 +45,27 @@ class UsuarioTest < Test::Unit::TestCase
     assert_equal false, Usuario.valid_password?('senha com mais de 30 caracteres para teste de tamanho')
   end
 
-  def testar_criacao_com_senha_invalida
+  def testar_registro_com_senha_invalida
     assert_raise ArgumentError do
-      Usuario.new 'napoleao', '12', '12'
+      Usuario.register 'napoleao', '12', '12'
     end
-    Usuario.new 'napoleao', 'r31d4guerr4', 'r31d4guerr4'
+    Usuario.register 'napoleao', 'r31d4guerr4', 'r31d4guerr4'
   end
 
-  def testar_criacao_com_senha_e_confirmacao_diferentes
+  def testar_registro_com_senha_e_confirmacao_diferentes
     assert_raise ArgumentError do
-      Usuario.new 'napoleao', '1234', '12345'
+      Usuario.register 'napoleao', '1234', '12345'
     end
-    Usuario.new 'napoleao', '1234', '1234'
+    Usuario.register 'napoleao', '1234', '1234'
   end
 
   def testar_se_password_foi_criptografado
-    user = Usuario.new 'cesar', 'daiacesaroqueehdecesar', 'daiacesaroqueehdecesar'
+    user = Usuario.register 'cesar', 'daiacesaroqueehdecesar', 'daiacesaroqueehdecesar'
     assert_not_equal 'daiacesaroqueehdecesar', user.password
   end
 
-  def testar_criacao
-    user = Usuario.new 'leonidas', 'raul', 'raul'
+  def testar_registro
+    user = Usuario.register 'leonidas', 'raul', 'raul'
     assert_equal 'leonidas', user.username
     assert_equal false, user.password.nil?
   end

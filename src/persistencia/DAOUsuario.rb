@@ -21,9 +21,9 @@ class DAOUsuario
 	# @return [Usuario] usuario
 	def read username, password
 		CONNECTION.prepare("read", "SELECT * FROM usuarios where username = ($1) and password = ($2)")
-		resultado = CONNECTION.exec_prepared("read", [username,password])
+		resultado = CONNECTION.exec_prepared("read", [username, password])
 		unless resultado.values.empty?
-			return Usuario.new username, password, password
+			return Usuario.new username, password
 		end
 		#TODO: Avisar usuário? Lançar excpetion?
 	end
