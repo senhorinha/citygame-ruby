@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 
 require_relative 'Persistence'
+require_relative '../exceptions'
 
 class DAOUsuario
 	include Persistence
@@ -9,10 +10,11 @@ class DAOUsuario
 	# @param [String] username
 	# @param [String] password
 	def create username, password
-		if validar_campos username
-			CONNECTION.prepare("create", "INSERT INTO usuarios (username, password) values ($1, $2)")
-	    CONNECTION.exec_prepared("create", [username, password])
-	  end
+		begin
+		    CONNECTION.exec( "INSERT INTO usuarios (username, password) values ('#{username}', '#{password}')" )
+		rescue PG::UniqueViolation
+			raise UsernameJaExistente, 'Username não disponível para cadastro'
+		end
 	end
 
 	# Procura usuario na tabela usuarios
@@ -20,28 +22,11 @@ class DAOUsuario
 	# @param [String] password
 	# @return [Usuario] usuario
 	def read username, password
-		CONNECTION.prepare("read", "SELECT * FROM usuarios where username = ($1) and password = ($2)")
-		resultado = CONNECTION.exec_prepared("read", [username, password])
+		resultado =  CONNECTION.exec( "SELECT * FROM usuarios where username = '#{username}' and password = '#{password}'" )
 		unless resultado.values.empty?
 			return Usuario.new username, password
 		end
 		#TODO: Avisar usuário? Lançar excpetion?
-	end
-
-private
-
-	# Faz a validação do campo username (Não permite cadastrar username já existente)
-	# @param [String] username
-	def validar_campos username
-		return existe_usuario_com_username? username
-	end
-
-	# Procura se existe usuario com username no banco de dados.
-	# @param [String] username
-	def existe_usuario_com_username? username
-		CONNECTION.prepare("buscar_pelo_username", "SELECT * FROM usuarios where username = ($1)")
-		resultado = CONNECTION.exec_prepared("buscar_pelo_username", [username])
-		resultado.values.empty?
 	end
 
 end
