@@ -50,8 +50,8 @@ class ModoPartida < Modo
   def map
     # Imprimir legenda do mapa
     s = "\nLegenda:  "
-    s <<= "{}" + " => Cidade   "        # COLORIR "{}" COM A COR DE UMA CIDADE
-    s <<= "[]" + " => Campo\n"          # COLORIR "[]" COM A COR DE UM CAMPO
+    s <<= "{ }" + " => Cidade   "
+    s <<= "[ ]" + " => Campo\n"
 
     for jogador in @jogo.jogadores
       nome_do_jogador = "%-8s" % jogador.nome
@@ -87,7 +87,10 @@ class ModoPartida < Modo
           end
         end
         if matriz[i][j].is_cidade
-          local = (local << "}").prepend "{"  # Cidades são representadas com {}
+          tamanho_dos_locais += 14*2
+          cor_da_cidade = :default
+          cor_da_cidade = cor_jogador(matriz[i][j].jogador) if matriz[i][j].jogador          
+          local = (local << "}".colorize(cor_da_cidade)).prepend "{".colorize(cor_da_cidade)  # Cidades são representadas com {}
         else
           local = (local << "]").prepend "["  # Campos são representados com []
         end
@@ -137,7 +140,7 @@ class ModoPartida < Modo
   # Retorna a cor do jogador passado
   # @return [int] Inteiro que representa uma cor
   def cor_jogador jogador
-    return String.colors[jogador.id + 1]
+    return String.colors[jogador.id + 3]
   end
 
 end
