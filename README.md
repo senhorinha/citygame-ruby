@@ -19,3 +19,9 @@ Utilize `ruby view/text/init.rb` para rodar o jogo em modo texto.
 * [Carlos Bonetti](https://github.com/CarlosBonetti/citygame-ruby)
 * [Lucas Tonussi](https://github.com/tonussi)
 * [Thiago Rose](https://github.com/thisenrose)
+
+### Rodando os testes unitários
+
+`$ ruby tests/AllTests.rb` para rodar todos os testes da aplicação.
+
+`$ ruby tests/AllTests.rb -- db` para rodar todos os testes da aplicação + os testes de persistência (é necessária a configuração da base de dados).
