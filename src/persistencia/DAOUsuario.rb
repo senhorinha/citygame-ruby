@@ -30,4 +30,10 @@ class DAOUsuario
 		return false
 	end
 
+	# Deleta o usuário que tenha o username informado
+	# @param [String] username
+	def delete username
+		res = CONNECTION.exec("DELETE FROM usuarios where username = '#{username}'")
+	end
+
 end

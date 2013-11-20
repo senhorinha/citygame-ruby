@@ -11,9 +11,10 @@ class DAOUsuarioTest < Test::Unit::TestCase
   end
 
   def test_cadastrar_e_buscar_usuario
-    @dao.create "Luis_IV", "r31d4guerr4"
-    usuario = @dao.read "Luis_IV", "r31d4guerr4"
-    assert_equal 'Luis_IV', usuario.username
+    @dao.delete "user_teste_cadastro"
+    @dao.create "user_teste_cadastro", "r31d4guerr4"
+    usuario = @dao.read "user_teste_cadastro", "r31d4guerr4"
+    assert_equal 'user_teste_cadastro', usuario.username
     assert_equal 'r31d4guerr4', usuario.password
   end
 
