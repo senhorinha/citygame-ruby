@@ -2,12 +2,13 @@
 require_relative 'Modo'
 require_relative 'ModoPartida'
 require_relative '../../src/persistencia/DAOUsuario'
+require_relative '../../src/persistencia/DAOLogBatalha'
 
 class ModoNovoJogo < Modo
 
   def initialize jogo
     super jogo
-    @comandos = ['exit', 'help', 'registrar', 'login', 'status', 'iniciar']
+    @comandos = ['exit', 'help', 'registrar', 'login', 'status', 'iniciar', 'vitorias']
   end
 
   def prefixo
@@ -22,6 +23,7 @@ class ModoNovoJogo < Modo
     puts "    * login                - Loga o jogador e o adiciona na partida (username e senha necessários)"
     puts "    * status               - Mostra os jogadores atuais"
     puts "    * iniciar              - Inicia a partida com os jogadores atuais, iniciando o modo 'partida'"
+    puts "    * vitorias [username]  - Mostra as batalhas vencidas pelo jogador"
     puts ""
   end
 
@@ -88,6 +90,21 @@ class ModoNovoJogo < Modo
     modo_partida = ModoPartida.new(@jogo)
     success_msg "Partida iniciada!"
     return modo_partida
+  end
+
+  def vitorias username
+    dao = DAOLogBatalha.new
+    batalhas = dao.read_batalhas_vencidas_por username
+
+    return if batalhas.empty?
+
+    puts "Batalhas vencidas por #{username}"
+    batalhas.each do |batalha|
+      print "   #{batalha.turnos} turnos. Jogadores: "
+      nomes = batalha.jogadores.map { |j| j.username }
+      print nomes.join(', ')
+      puts
+    end
   end
 
 end

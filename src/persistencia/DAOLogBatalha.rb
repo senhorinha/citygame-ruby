@@ -26,17 +26,15 @@ class DAOLogBatalha
 	end
 
 	# Procura usuario na tabela usuarios
-	# @param [Usuario] usuario
+	# @param [string] username
 	# @return [LogBatalha[]] batalhas
-	def read_batalhas_vencidas_por usuario
-
-		username = usuario.username
-
-		# Busca todas batalhas em que o vencedor foi o usuario passado como parâmetro
+	def read_batalhas_vencidas_por username
+	  # Busca todas batalhas em que o vencedor foi o usuario passado como parâmetro
 		query_batalhas = CONNECTION.exec( "SELECT * FROM batalhas where vencedor = '#{username}'" )
 		batalhas = []
 
 		query_batalhas.each do |resultado_tabela_batalhas|
+			vencedor = nil # Vencedor da batalha
 			jogadores = []
 
 			# Busca username (Usuario) na tabela batalha_usuario com o id da batalha
@@ -45,7 +43,9 @@ class DAOLogBatalha
 				# Busca password (Usuario) da tabela usuarios
 				query_password = CONNECTION.exec( "SELECT password FROM usuarios where username = '#{resultado_tabela_batalha_usuario['username']}' " )
 				query_password.each do |resultado_tabela_usuarios|
-					jogadores.push (Usuario.new resultado_tabela_batalha_usuario['username'], resultado_tabela_usuarios['password'])
+					user = Usuario.new resultado_tabela_batalha_usuario['username'], resultado_tabela_usuarios['password']
+					jogadores.push user
+					vencedor = user if user.username == username
 				end
 				query_password.clear
 			end
@@ -54,7 +54,7 @@ class DAOLogBatalha
 			batalha = LogBatalha.new
 			batalha.jogadores = jogadores
 			batalha.turnos = resultado_tabela_batalhas["turnos"].to_i
-			batalha.vencedor = usuario
+			batalha.vencedor = vencedor
 
 			batalhas.push batalha
 
