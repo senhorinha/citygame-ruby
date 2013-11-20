@@ -17,6 +17,12 @@ class Jogo
     @log = LogBatalha.new
   end
 
+  # Adiciona o usuário ao jogo
+  # @param [User]
+  def adicionar_usuario user
+    criar_jogador user.username
+  end
+
   # Cria um novo jogador
   # Parâmetros: nome (String) -> nome do novo jogador
   # Jogadores devem ser criados antes da partida iniciar. Caso novos jogadores tentem ser criados após a partida iniciar, o método lança um CitygameException

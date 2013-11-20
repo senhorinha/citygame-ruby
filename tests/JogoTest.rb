@@ -15,6 +15,9 @@ class JogoTest < Test::Unit::TestCase
     @cesar = @jogo.jogadores[1]
 
     @jogo_sem_jogadores = Jogo.new
+
+    @alexandre = Usuario.new 'alexandre', '0grand3'
+    @leonidas = Usuario.new 'leonidas', 'raul'
   end
 
   def test_criar_jogador
@@ -25,6 +28,16 @@ class JogoTest < Test::Unit::TestCase
     @jogo_sem_jogadores.criar_jogador 'César'
     assert_equal 2, @jogo_sem_jogadores.jogadores.size
     assert_equal 'César', @jogo_sem_jogadores.jogadores[1].nome
+  end
+
+  def test_adicionar_usuario
+    @jogo_sem_jogadores.adicionar_usuario @alexandre
+    assert_equal 1, @jogo_sem_jogadores.jogadores.size
+    assert_equal 'alexandre', @jogo_sem_jogadores.jogadores[0].nome
+
+    @jogo_sem_jogadores.adicionar_usuario @leonidas
+    assert_equal 2, @jogo_sem_jogadores.jogadores.size
+    assert_equal 'leonidas', @jogo_sem_jogadores.jogadores[1].nome
   end
 
   def test_iniciar_sem_jogadores
