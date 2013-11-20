@@ -1,7 +1,6 @@
 # -*- encoding : utf-8 -*-
 
 require 'test/unit'
-require_relative '../src/persistencia/Conexao'
 require_relative '../src/persistencia/DAOUsuario'
 require_relative '../src/Usuario'
 

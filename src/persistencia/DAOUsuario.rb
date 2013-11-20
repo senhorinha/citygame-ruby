@@ -1,24 +1,18 @@
 # -*- encoding : utf-8 -*-
 
-require_relative 'Conexao'
+require_relative 'Persistence'
 
 class DAOUsuario
-	attr_reader :conexao
-
-	def initialize
-		@conexao = Conexao.new
-	end
+	include Persistence
 
 	# Cadastra usuario na tabela usuarios
 	# @param [String] username
 	# @param [String] password
-	def create username,password
-		@conexao.conectar
+	def create username, password
 		if validar_campos username
-			@conexao.prepare("create", "insert into usuarios (username, password) values ($1, $2)")
-	    	@conexao.exec_prepared("create", [username, password])
-	  	end
-	  	@conexao.desconectar
+			CONNECTION.prepare("create", "INSERT INTO usuarios (username, password) values ($1, $2)")
+	    CONNECTION.exec_prepared("create", [username, password])
+	  end
 	end
 
 	# Procura usuario na tabela usuarios
@@ -26,12 +20,10 @@ class DAOUsuario
 	# @param [String] password
 	# @return [Usuario] usuario
 	def read username, password
-		@conexao.conectar
-		@conexao.prepare("read", "SELECT * FROM usuarios where username = ($1) and password = ($2)")
-		resultado = @conexao.exec_prepared("read",[username,password])
-		conexao.desconectar
-		unless resultado.empty?
-			return Usuario.new username,password
+		CONNECTION.prepare("read", "SELECT * FROM usuarios where username = ($1) and password = ($2)")
+		resultado = CONNECTION.exec_prepared("read", [username,password])
+		unless resultado.values.empty?
+			return Usuario.new username, password, password
 		end
 		#TODO: Avisar usuário? Lançar excpetion?
 	end
@@ -47,9 +39,9 @@ private
 	# Procura se existe usuario com username no banco de dados.
 	# @param [String] username
 	def existe_usuario_com_username? username
-		@conexao.prepare("buscar_pelo_username", "SELECT * FROM usuarios where username = ($1)")
-		resultado = @conexao.exec_prepared("buscar_pelo_username",[username])
-		resultado.empty?
+		CONNECTION.prepare("buscar_pelo_username", "SELECT * FROM usuarios where username = ($1)")
+		resultado = CONNECTION.exec_prepared("buscar_pelo_username", [username])
+		resultado.values.empty?
 	end
 
 end
