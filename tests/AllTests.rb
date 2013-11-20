@@ -21,4 +21,5 @@ require_relative 'atividadesTests/AtDescansoTropaTest.rb'
 # Ex.: ruby AllTests.rb -- db
 if ARGV.size > 0 && ARGV.include?('db') then
   require_relative 'DAOUsuarioTest.rb'
+  require_relative 'DAOLogBatalhaTest.rb'
 end
