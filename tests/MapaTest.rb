@@ -21,7 +21,6 @@ class MapaTest < Test::Unit::TestCase
     assert_not_empty @mapa.matriz
     assert_not_empty @mapa.campos
     assert_not_empty @mapa.cidades
-    assert_not_empty @mapa.grafo.vertices
   end
 
   def test_direcao_valida
