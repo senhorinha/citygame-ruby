@@ -1,6 +1,5 @@
 # -*- encoding : utf-8 -*-
 
-
 require_relative '../src/Usuario'
 require_relative '../src/persistencia/DAOLogBatalha'
 require_relative '../src/LogBatalha'
@@ -26,6 +25,5 @@ class DAOLogBatalhaTest < Test::Unit::TestCase
    batalhas = @dao.read_batalhas_vencidas_por @usuario_2
    assert_equal 1, batalhas.size
   end
-
 
 end
