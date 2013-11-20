@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 require_relative 'Modo'
 require_relative 'ModoPartida'
+require_relative '../../src/persistencia/DAOUsuario'
 
 class ModoNovoJogo < Modo
 
@@ -34,12 +35,18 @@ class ModoNovoJogo < Modo
       user = Usuario.register username, senha, senha_confirm
     rescue ArgumentError => e
       warning_msg e.to_s
-      return registrar
+      return
     end
 
-    # TODO: Testar ainda se esse username já não existe no DB!
-    # TODO: UsuarioDAO.create user -> PERSISTIR USUÁRIO!
-    warning_msg "TODO: Adicionar na base de dados aqui"
+    begin
+      dao = DAOUsuario.new
+      dao.create user.username, user.password
+    rescue => e
+      warning_msg e.to_s
+      return
+    end
+
+    success_msg "Usuário #{username} cadastrado! Efetue login para entrar na partida"
   end
 
   def login

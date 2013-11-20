@@ -36,7 +36,7 @@ class Usuario
   end
 
   def self.digest password
-    Digest::SHA1.hexdigest(password)
+    Digest::SHA1.hexdigest(password)[0..29]
   end
 
 end
