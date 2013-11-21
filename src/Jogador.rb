@@ -6,6 +6,8 @@ class Jogador
   attr_reader :fila_de_atividades
   attr_accessor :tecnologia
 
+  alias_method :username, :nome
+
   def initialize id, nome
     @id = id
     @nome = nome

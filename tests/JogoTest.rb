@@ -10,6 +10,7 @@ class JogoTest < Test::Unit::TestCase
     @jogo = Jogo.new
     @jogo.criar_jogador 'Napoleão'
     @jogo.criar_jogador 'César'
+    @jogo.disable_log
 
     @napoleao = @jogo.jogadores[0]
     @cesar = @jogo.jogadores[1]

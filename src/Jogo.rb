@@ -4,10 +4,11 @@ require_relative 'Jogador'
 require_relative 'Cidade'
 require_relative 'Mapa'
 require_relative 'LogBatalha'
+require_relative 'persistencia/DAOLogBatalha'
 
 class Jogo
   attr_reader :jogadores, :jogador_atual
-  attr_reader :turno
+  attr_reader :turno, :log_enabled
   attr_reader :mapa, :log
 
   def initialize
@@ -15,6 +16,7 @@ class Jogo
     @jogadores = []
     @mapa = Mapa.new
     @log = LogBatalha.new
+    @log_enabled = true
   end
 
   # Adiciona o usuário ao jogo
@@ -60,7 +62,10 @@ class Jogo
       if terminou? then
         @log.turnos = @turno
         @log.vencedor = @jogadores[0]
-        # TODO: LogBatalhaDAO.create(@log) PERSISTIR LOGBATALHA!
+        if @log_enabled then
+          dao = DAOLogBatalha.new
+          dao.create(@log)
+        end
       end
     end
 
@@ -114,6 +119,11 @@ class Jogo
   # @return [Boolean]
   def terminou?
     return @jogadores.size <= 1
+  end
+
+  # Desabilita o log de batalhas
+  def disable_log flag = false
+    @log_enabled = flag
   end
 
 end
