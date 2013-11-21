@@ -8,9 +8,17 @@ require_relative '../src/LogBatalha'
 class DAOLogBatalhaTest < Test::Unit::TestCase
 
   def setup
+    dao_user = DAOUsuario.new
+    begin
+      dao_user.create "user_teste_1", "teste1"
+      dao_user.create "user_teste_2", "teste2"
+    rescue UsernameJaExistente => e
+
+    end
+
     @dao = DAOLogBatalha.new
-    @usuario_1 = Usuario.new "Luis_IV", "r31d4guerr4"
-    @usuario_2 = Usuario.new "napoleao", "r31d4guerr4"
+    @usuario_1 = Usuario.new "user_teste_1", "teste1"
+    @usuario_2 = Usuario.new "user_teste_2", "teste2"
     @log = LogBatalha.new
     @log.turnos = 10
     @log.adicionar_jogador @usuario_1
